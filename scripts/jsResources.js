@@ -514,7 +514,7 @@ jsResources.prototype.utf8_to_b64 = function(str)
 
 														jsResources.prototype.populateListChatContacts = function(domComponent,strJson)
 															{
-																alert(strJson);
+																//alert(strJson);
 																domComponent.empty();
 																var items = [];
 																items.push('<div class="w3-container">');
