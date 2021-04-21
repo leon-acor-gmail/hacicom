@@ -535,7 +535,7 @@ jsResources.prototype.utf8_to_b64 = function(str)
 																domComponent.append( items.join('') );
 															}
 
-															jsResources.prototype.populateListChatMessges = function(domComponent,strJson)
+															jsResources.prototype.populateListChatMessages = function(domComponent,strJson)
 																{
 																	alert(strJson);
 																	domComponent.empty();

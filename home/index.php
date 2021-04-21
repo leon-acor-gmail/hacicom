@@ -327,7 +327,7 @@ else
     $.post('../bsns/bsnsHome.php',{c:5,arg:base},function(r){
       respContacts = objResources.b64_to_utf8(r);
       objResources.populateListChatContacts($('#divGetChatLargeContacts'),respContacts);
-      //objResources.populateListChatMessges($('#divGetChatLargeMessagesBottom'),respMessages);
+      //objResources.populateListChatMessages($('#divGetChatLargeMessagesBottom'),respMessages);
     });
   }
 
