@@ -1,0 +1,88 @@
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../fonts/HKGrotesk.otf);
+}
+
+.txtLineHKGrotesk{
+  font-family: HKGrotesk;
+}
+
+
+.btnColorHaCi{
+  background-color: #de552d;
+  color: white;
+}
+
+.btnColorHaCi:hover{
+  background-color: #ff0000;
+  color: white;
+}
+
+.txtColorHaCi{
+  color: #de552d;
+}
+
+.divSmall{
+
+  display: block;
+}
+
+.divLarge{
+
+  display: none;
+}
+
+.bgImage0{
+  background-image: url("../images/bgBlackboard.jpg");
+  background-repeat: repeat-y;
+}
+
+.btnLogin {
+  border-radius: 20px;
+  width: 200px;
+}
+
+.divMargin{
+  margin-top: 70px;
+}
+
+.imgMarginLogo{
+  margin: 30px;
+}
+
+a:hover{
+  text-decoration: none;
+  color: #de552d;
+}
+
+
+select{
+  -webkit-appearance: menulist-button;
+}
+
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+
+}
+
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (min-width: 768px) {
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .divSmall{
+    display: none;
+  }
+
+  .divLarge{
+    display: block;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+}

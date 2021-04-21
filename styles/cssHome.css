@@ -1,0 +1,197 @@
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../fonts/HKGrotesk.otf);
+}
+
+@font-face {
+  font-family: DJBChalkItUp;
+  src: url(../fonts/DJBChalkItUp.ttf);
+}
+
+.txtLineDJBChalkItUp{
+  font-family: DJBChalkItUp;
+}
+
+.txtLineHKGrotesk{
+  font-family: HKGrotesk;
+}
+
+.btnColorHaCi{
+  background-color: #de552d;
+  color: white;
+}
+
+.btnColorHaCi:hover{
+  background-color: #ff0000;
+  color: white;
+}
+
+a:hover{
+  text-decoration: none;
+  color: #f7f7f7;
+}
+
+.collapseColorHaCi{
+  background-color: #f7f7f7;
+  color: #de552d;
+}
+
+.collapseColorHaCi:hover{
+  background-color: #de552d;
+  text-decoration: none;
+  color: #f7f7f7;
+}
+
+.collapseColorHaCiSelected{
+  background-color: #de552d;
+  /*background-color: red;*/
+  color: white;
+}
+
+.divSmall{
+  display: block;
+}
+
+.divLarge{
+  display: none;
+}
+
+.btnSkills {
+  border-radius: 20px;
+  width: 200px;
+}
+
+.bgImage0{
+  background-image: url("../images/bgBlackboard.jpg");
+  background-repeat: repeat-y;
+}
+
+.btnHome {
+  border-radius: 20px;
+  width: 200px;
+}
+
+.divMargin{
+  margin-top: 70px;
+}
+
+.divMarginBreadcrums{
+  margin-top: 100px;
+}
+
+.imgMarginLogo{
+  margin-top: 80px;
+}
+
+.selectCountry{
+  width:100%;
+  height:40px;
+}
+
+.txtMarginIcon{
+  margin-right:37px;
+  margin-left:37px;
+}
+
+/*.txtMarginImageProfile{
+  position: absolute;
+  right: 1%;
+  bottom: 17px;
+  width: 50px;
+  height: auto;
+}*/
+
+.txtMarginImageProfile{
+  position: absolute;
+  right: 195px;
+  bottom: 18px;
+  width: 50px;
+  height: auto;
+}
+
+.txtMarginNameProfile{
+  position: absolute;
+  right: 70px;
+  bottom: 33px;
+  /*width: 50px;
+  height: auto;*/
+}
+
+.divShow{
+  display: block;
+}
+
+.divHide{
+  display: none;
+}
+
+.divOverflow{
+  width:auto;
+  height:250px;
+  overflow:scroll;
+}
+
+.topnav {
+  overflow: hidden;
+}
+
+.topnav .aNavElement {
+  float: left;
+  display: block;
+
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+
+  border-bottom: 3px solid transparent;
+}
+
+.topnav .aNavElement:hover {
+  border-bottom: 3px solid red;
+}
+
+.topnav .aNavElement.active {
+  border-bottom: 3px solid #de552d;
+}
+
+.notificationAlert {
+  text-decoration: none;
+  padding: 2px 4px;
+  position: relative;
+}
+
+.notificationAlert .badgeAlert {
+  position: absolute;
+  top: -10px;
+  right: 35px;
+  padding: 2px 8px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+
+}
+
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (min-width: 768px) {
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .divSmall{
+    display: none;
+  }
+
+  .divLarge{
+    display: block;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+}

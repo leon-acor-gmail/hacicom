@@ -1,0 +1,22 @@
+ul.breadcrumbSignup {
+  padding: 10px 16px;
+  list-style: none;
+
+}
+ul.breadcrumbSignup li {
+  display: inline;
+}
+ul.breadcrumbSignup li+li:before {
+  padding: 8px;
+  color: white;
+  content: "\00a0";
+  /*\00a0\00a0*/
+}
+ul.breadcrumbSignup li a {
+  color: white;
+  text-decoration: none;
+}
+ul.breadcrumbSignup li a:hover {
+  color: white;
+  text-decoration: none;
+}

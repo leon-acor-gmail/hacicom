@@ -1,0 +1,105 @@
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../fonts/HKGrotesk.otf);
+}
+
+@font-face {
+  font-family: DJBChalkItUp;
+  src: url(../fonts/DJBChalkItUp.ttf);
+}
+
+.txtLineDJBChalkItUp{
+  font-family: DJBChalkItUp;
+}
+
+.txtLineHKGrotesk{
+  font-family: HKGrotesk;
+}
+
+.btnColorHaCi{
+  background-color: #de552d;
+  color: white;
+}
+
+.btnColorHaCi:hover{
+  background-color: #ff0000;
+  color: white;
+}
+
+.divSmall{
+
+  display: block;
+}
+
+.divLarge{
+
+  display: none;
+}
+
+.txtSignUpLength{
+  width: 260px;
+}
+
+.bgImage0{
+  background-image: url("../images/web-brand-imagen-1.png");
+  background-repeat: no-repeat;
+}
+
+.btnIndex {
+  border-radius: 20px;
+  width: 200px;
+}
+
+.txtMargin{
+  margin-top: 60px;
+}
+
+.txtMarginBottom{
+  margin-bottom: 150px;
+}
+
+.txtMarginInput{
+  margin-top: 45px;
+}
+
+a:hover{
+  text-decoration: none;
+  color: #de552d;
+}
+
+.imgLogo{
+  width:135px;
+  height:auto;
+}
+
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+
+}
+
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (min-width: 768px) {
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .divSmall{
+    display: none;
+  }
+
+  .divLarge{
+    display: block;
+  }
+
+  .txtSignUpLength{
+    width: 360px;
+  }
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+}
