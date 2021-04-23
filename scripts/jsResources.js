@@ -203,13 +203,13 @@ jsResources.prototype.utf8_to_b64 = function(str)
 													if(iIndex==1){
 														items.push('<a class="dropdown-item"><b>'+v.L1+'</b></a>');
 														items.push('<a class="dropdown-item">');
-														items.push('<input type="checkbox" onclick="setLookupSkillSpan(\''+w.L4+'\');" class="form-check-input" value="'+w.L3+'" id="cbValSkill'+strResponsive+iCount+'">');
+														items.push('<input type="checkbox" onclick="setLookupSkillSpan(\''+w.L4+'\',\''+w.L3+'\',\'cbValSkill'+strResponsive+iCount+'\');" class="form-check-input" value="'+w.L3+'" id="cbValSkill'+strResponsive+iCount+'">');
 														items.push('<label class="form-check-label" for="cbValSkill'+strResponsive+iCount+'">'+w.L4+'</label>');
 														items.push('</a>');
 													}
 													else {
 														items.push('<a class="dropdown-item">');
-														items.push('<input type="checkbox" onclick="setLookupSkillSpan(\''+w.L4+'\');" class="form-check-input" value="'+w.L3+'" id="cbValSkill'+strResponsive+iCount+'">');
+														items.push('<input type="checkbox" onclick="setLookupSkillSpan(\''+w.L4+'\',\''+w.L3+'\',\'cbValSkill'+strResponsive+iCount+'\');" class="form-check-input" value="'+w.L3+'" id="cbValSkill'+strResponsive+iCount+'">');
 														items.push('<label class="form-check-label" for="cbValSkill'+strResponsive+iCount+'">'+w.L4+'</label>');
 														items.push('</a>');
 													}
@@ -227,15 +227,54 @@ jsResources.prototype.utf8_to_b64 = function(str)
 									domComponent.append( items.join('') );
 								}
 
-								jsResources.prototype.populateLookupSkillSpan = function(domComponent,strElement)
+								jsResources.prototype.populateLookupSkillSpan = function(domComponent,strElement,strCode,idElement,strResponsive)
 									{
-										domComponent.append('<span class="badge w3-dark-grey w3-small">'+strElement+'</span>');
+										if(!$('#'+idElement).prop('checked')){
+											$('#span'+strResponsive+strCode).remove();
+										}
+										else
+										{
+											var strId =domComponent.prop('id');
+											var iTimes = 0;
+											$('#'+strId+' span').each(function( index ) {
+												if($(this).text() == strElement){
+													iTimes++;
+												}
+											});
+											if(iTimes == 0){
+												domComponent.append('<span id="span'+strResponsive+strCode+'" class="badge w3-dark-grey w3-small" style="margin:2px;">'+strElement+'<i class="fa fa-times w3-tiny" style="padding:2px;" onclick="objResources.uncheckDropboxLookup(\''+strCode+'\',\''+strResponsive+'\',\''+idElement+'\');"></i></span>');
+											}
+										}
 									}
 
-									jsResources.prototype.populateLookupPlaceSpan = function(domComponent,strElement)
+									jsResources.prototype.populateLookupPlaceSpan = function(domComponent,strElement,strCode,idElement,strResponsive)
 										{
-											domComponent.append('<span class="badge w3-dark-grey w3-small">'+strElement+'</span>');
+											if(!$('#'+idElement).prop('checked')){
+												//alert('#span'+strCode);
+												$('#span'+strResponsive+strCode).remove();
+											}
+											else
+											{
+												var strId =domComponent.prop('id');
+												var iTimes = 0;
+												$('#'+strId+' span').each(function( index ) {
+													if($(this).text() == strElement){
+														iTimes++;
+													}
+												});
+												if(iTimes == 0){
+													domComponent.append('<span id="span'+strResponsive+strCode+'" class="badge w3-dark-grey w3-small" style="margin:2px;">'+strElement+'<i class="fa fa-times w3-tiny" style="padding:2px;" onclick="objResources.uncheckDropboxLookup(\''+strCode+'\',\''+strResponsive+'\',\''+idElement+'\');"></i></span>');
+												}
+											}
+											//domComponent.append('<span class="badge w3-dark-grey w3-small" style="margin:2px;">'+strElement+'<i class="fa fa-times w3-tiny" style="padding:2px;" onclick="alert(\''+strCode+'\');"></i></span>');
 										}
+
+										jsResources.prototype.uncheckDropboxLookup = function(strCode,strResponsive,idElement)
+											{
+												$('#span'+strResponsive+strCode).remove();
+												$('#'+idElement).prop('checked',false);
+												getDropboxFieldsSkills(strResponsive);
+											}
 
 								jsResources.prototype.populateDropboxCountries = function(domComponent,strJson,strResponsive)
 									{
@@ -248,7 +287,7 @@ jsResources.prototype.utf8_to_b64 = function(str)
 										items.push('<div class="dropdown-menu">');
 										$.each(jQuery.parseJSON(strJson), function(i,v) {
 											items.push('<a class="dropdown-item">');
-											items.push('<input type="checkbox" onclick="setLookupPlaceSpan(\''+v.L2+'\');" class="form-check-input" value="'+v.L1+'" id="cbValPlace'+strResponsive+iCount+'">');
+											items.push('<input type="checkbox" onchange="setLookupPlaceSpan(\''+v.L2+'\',\''+v.L1+'\',\'cbValPlace'+strResponsive+iCount+'\');" class="form-check-input" value="'+v.L1+'" id="cbValPlace'+strResponsive+iCount+'">');
 											items.push('<label class="form-check-label" for="cbValPlace'+strResponsive+iCount+'">'+v.L2+'</label>');
 											items.push('</a>');
 											iCount++;

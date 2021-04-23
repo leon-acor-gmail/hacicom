@@ -59,7 +59,7 @@ if ($uploadOk == 0) {
   if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
     $json->shotUser=htmlspecialchars( basename( $_FILES["fileToUpload"]["name"]));
     $json->shotSystem=$target_name;
-    header('Location: ../../signup/shot.php?arg='.base64_encode(json_encode($json)).'&c=1');
+    header('Location: ../signup/shot.php?arg='.base64_encode(json_encode($json)).'&c=1');
     //echo "La foto ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " se envió con éxito. --- ";
   } else {
     echo "Lo sentimos, ocurrió un error, intentalo más tarde. --- ";

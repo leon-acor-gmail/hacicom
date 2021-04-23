@@ -46,6 +46,40 @@ class InfoSystem extends DataSystem
   		return $strR;
   	}
 
+    public function getUserShotSystemByEmail($arg)
+  	{
+      $objJson = json_decode(base64_decode($arg));
+  		$this->OpenDB();
+  		$this->bConnection->set_charset("utf8");
+  		$res = $this->bConnection->query("select shotSystem as L1 from prodUsers where status = 1 and email = '".$objJson->email."';");
+  		$row = $res->fetch_assoc();
+  		$file_to_search = $row['L1'];
+  		$this->CloseDB();
+
+      //$file_to_search = "leon.acor@gmail.com_20210415_162905_5dd3c1bb665723899339a7dde1f1f1c1ad9560bf.jpg";
+      $dir='../uploads';
+      $email = substr(basename($file_to_search),0,-57);
+      $files = scandir($dir);
+      foreach($files as $key => $value)
+      {
+        $realpath = $dir.DIRECTORY_SEPARATOR.$value;
+        $path = realpath($realpath);
+        if(!is_dir($path))
+        {
+          $rest = substr(basename($value),0,-57);
+          if($email == $rest)
+          {
+            if($file_to_search != $value)
+            {
+              unlink($path);
+            }
+          }
+        }
+      }
+
+  		return '1';
+  	}
+
     public function setProdLoadJSON($arg)
   	{
       $this->OpenDB();
@@ -553,6 +587,27 @@ class InfoSystem extends DataSystem
       $this->bConnection->set_charset("utf8");
       $res = $this->bConnection->query("update prodUsers set shotUser='".$objJson->arg3."', shotSystem='".$objJson->arg2."' where status = 1 and email = '".$objJson->arg1."';");
       $this->CloseDB();
+      $file_to_search = $objJson->arg2;
+      $dir='../uploads';
+      $email = substr(basename($file_to_search),0,-57);
+      $files = scandir($dir);
+      foreach($files as $key => $value)
+      {
+        $realpath = $dir.DIRECTORY_SEPARATOR.$value;
+        $path = realpath($realpath);
+        if(!is_dir($path))
+        {
+          $rest = substr(basename($value),0,-57);
+          if($email == $rest)
+          {
+            if($file_to_search != $value)
+            {
+              unlink($path);
+            }
+          }
+        }
+      }
+
       return 1;
       //return "update prodUsers set shotUser='".$objJson->arg3."', shotSystem='".$objJson->arg2."' where status = 1 and email = '".$objJson->arg1."';";
     }

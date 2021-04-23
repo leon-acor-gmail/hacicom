@@ -7,7 +7,8 @@ switch ($_POST['c']) {
     $r1=$objInfoSystem->setUser($_POST['arg']);
     $r2=$objInfoSystem->setUsersFieldsSkills($_POST['arg']);
     $r3=$objInfoSystem->setUsersCountries($_POST['arg']);
-    echo $r1.$r2.$r3;
+    $r4=$objInfoSystem->getUserShotSystemByEmail($_POST['arg']);
+    echo $r1.$r2.$r3.$r4;
     //header('Location: ../home/?arg='.$r.'&result=1');
     break;
   case 2:

@@ -124,6 +124,9 @@ else
     getUserRequest();
     getChat();
 
+    window.setInterval(function(){getUserRequest()}, 3000);
+
+
     $('#btnSaveDataMsgLarge').click(function(a){
         var b = document.getElementsByTagName('form')[0];
         if(b.checkValidity())
@@ -331,14 +334,14 @@ else
     });
   }
 
-  function setLookupSkillSpan(strElement){
-    objResources.populateLookupSkillSpan($('#divDropboxFieldsSkillsLargeSpan'),strElement);
-    objResources.populateLookupSkillSpan($('#divDropboxFieldsSkillsSmallSpan'),strElement);
+  function setLookupSkillSpan(strElement,strCode,idElement){
+    objResources.populateLookupSkillSpan($('#divDropboxFieldsSkillsLargeSpan'),strElement,strCode,idElement,'Large');
+    objResources.populateLookupSkillSpan($('#divDropboxFieldsSkillsSmallSpan'),strElement,strCode,idElement,'Small');
   }
 
-  function setLookupPlaceSpan(strElement){
-    objResources.populateLookupPlaceSpan($('#divDropboxCountriesLargeSpan'),strElement);
-    objResources.populateLookupPlaceSpan($('#divDropboxCountriesSmallSpan'),strElement);
+  function setLookupPlaceSpan(strElement,strCode,idElement){
+    objResources.populateLookupPlaceSpan($('#divDropboxCountriesLargeSpan'),strElement,strCode,idElement,'Large');
+    objResources.populateLookupPlaceSpan($('#divDropboxCountriesSmallSpan'),strElement,strCode,idElement,'Small');
   }
 
 
