@@ -24,7 +24,7 @@ try
   $mail->addAddress($strTo,$strToName);
   $mail->addBCC('leon@hagamoscine.com');
   $mail->Subject=$strSubject;
-  $mail->Body='<!DOCTYPE html><html lang="es"><head><title>Hagamos Cine</title><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body><p>Estimada(o) '.$strToName.',</p><p>'.$strMessage.'</p><p style="font-size:12px;">Nota: En cumplimiento a lo dispuesto por la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, Hagamos Cine pone a su disposición su <a href="https://www.hagamoscine.co/aviso.html">politica de privacidad</a>, cualquier duda, consulta o requerimiento relacionado con dicha politica podrá ser dirigido a la siguiente dirección: hagamoscine.com@gmail.com</p></body></html>';
+  $mail->Body='<!DOCTYPE html><html lang="es"><head><title>Hagamos Cine</title><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body><p>Estimada(o) '.$strToName.',</p><p>'.$strMessage.'</p><p style="font-size:12px;">Nota: En cumplimiento a lo dispuesto por la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, Hagamos Cine pone a su disposición su <a href="https://www.hagamoscine.com/aviso.html">politica de privacidad</a>, cualquier duda, consulta o requerimiento relacionado con dicha politica podrá ser dirigido a la siguiente dirección: hagamoscine.com@gmail.com</p></body></html>';
   $mail->isHTML(true);
   $mail->send();
   //echo 1;

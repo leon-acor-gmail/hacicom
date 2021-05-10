@@ -10,7 +10,6 @@ ul.breadcrumbSignup li+li:before {
   padding: 8px;
   color: white;
   content: "\00a0";
-  /*\00a0\00a0*/
 }
 ul.breadcrumbSignup li a {
   color: white;
@@ -19,4 +18,18 @@ ul.breadcrumbSignup li a {
 ul.breadcrumbSignup li a:hover {
   color: white;
   text-decoration: none;
+}
+
+.iconStepper{
+  width: 15px;
+  height: 15px;
+}
+
+.txtStepper{
+  font-size: 12px;
+}
+
+.divMarginBreadcrums{
+  margin-top: 20px;
+  margin-bottom: 30px;
 }

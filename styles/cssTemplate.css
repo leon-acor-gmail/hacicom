@@ -1,0 +1,204 @@
+@font-face {
+  font-family: HKGrotesk;
+  src: url(../fonts/HKGrotesk.otf);
+}
+
+.divShow{
+  display: block;
+}
+
+.divHide{
+  display: none;
+}
+
+.bgColor{
+  background-color: #191824;
+}
+
+.txtFontFamily{
+  font-family: HKGrotesk;
+}
+
+.divSmall{
+  display: block;
+}
+
+.divLarge{
+  display: none;
+}
+
+.txtFooter{
+  text-align:center!important;
+}
+
+.btnColorHaCi{
+  background-image: linear-gradient(to right, rgba(222, 85, 45, 1), rgba(204, 44, 17, 1));
+  border-radius: 20px;
+  width: 100%;
+}
+
+.btnColorHaCi:hover{
+  background-image: linear-gradient(to right, rgba(244, 67, 54, 1), rgba(244, 67, 54, 1));
+  color: #ffffff !important;
+}
+
+.txtHover:hover{
+  text-decoration: none;
+  color: #de552d;
+}
+
+.txtColorHaCi{
+  color: #de552d;
+}
+
+.imgMarginLogo{
+  margin: 30px;
+}
+
+.imgLoader {
+  border: 80px solid #ff0000;
+  border-radius: 50%;
+  border-top: 8px solid #FF5733;
+  border-right: 8px solid #d13609;
+  border-bottom: 8px solid #FF5733;
+  border-left: 8px solid #d13609;
+  width: 60px;
+  height: 60px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  position: fixed;
+  top:-100%; right:-100%; left:-100%; bottom:-100%;
+  margin:auto;
+  z-index:0;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.imgShotSystemFormatMonogramIcon {
+  display: inline-block;
+  position: relative;
+  width: 45px;
+  height: 45px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.imgShotSystemFormatMonogramIcon img {
+  width: auto;
+  height: 100%;
+  margin-left: -50px;
+}
+
+.imgShotSystemFormatMonogram {
+  display: inline-block;
+  position: relative;
+  width: 170px;
+  height: 170px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.imgShotSystemFormatMonogram img {
+  width: 200px;
+  height: 200px;
+  margin-left: -50px;
+}
+
+.imgShotSystemFormatEven {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.imgShotSystemFormatLandscape {
+  display: inline-block;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.imgShotSystemFormatLandscape img {
+  width: auto;
+  height: 100%;
+  margin-left: -50px;
+}
+
+.imgShotSystemFormatPortrait {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.imgShotSystemFormatPortrait img {
+  width: 100%;
+  height: auto;
+}
+
+.imgShotSystemFormatEvenIcon {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+.imgShotSystemFormatLandscapeIcon {
+  display: inline-block;
+  position: relative;
+  width: 45px;
+  height: 45px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.imgShotSystemFormatLandscapeIcon img {
+  width: auto;
+  height: 100%;
+  margin-left: -12px;
+}
+
+.imgShotSystemFormatPortraitIcon {
+  position: relative;
+  width: 45px;
+  height: 45px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.imgShotSystemFormatPortraitIcon img {
+  width: 100%;
+  height: auto;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width:576px){}
+
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (min-width:768px) {}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width:992px){
+  .divSmall{
+    display: none;
+  }
+
+  .divLarge{
+    display: block;
+  }
+
+  .txtFooter{
+    text-align:left!important;
+  }
+}
+
+@media (min-width: 1200px){}

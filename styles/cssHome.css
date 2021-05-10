@@ -1,86 +1,8 @@
-@font-face {
-  font-family: HKGrotesk;
-  src: url(../fonts/HKGrotesk.otf);
-}
-
-@font-face {
-  font-family: DJBChalkItUp;
-  src: url(../fonts/DJBChalkItUp.ttf);
-}
-
-.txtLineDJBChalkItUp{
-  font-family: DJBChalkItUp;
-}
-
-.txtLineHKGrotesk{
-  font-family: HKGrotesk;
-}
-
-.btnColorHaCi{
-  background-color: #de552d;
-  color: white;
-}
-
-.btnColorHaCi:hover{
-  background-color: #ff0000;
-  color: white;
-}
-
-a:hover{
-  text-decoration: none;
-  color: #f7f7f7;
-}
-
-.collapseColorHaCi{
-  background-color: #f7f7f7;
-  color: #de552d;
-}
-
-.collapseColorHaCi:hover{
-  background-color: #de552d;
-  text-decoration: none;
-  color: #f7f7f7;
-}
-
-.collapseColorHaCiSelected{
-  background-color: #de552d;
-  /*background-color: red;*/
-  color: white;
-}
-
-.divSmall{
-  display: block;
-}
-
-.divLarge{
-  display: none;
-}
-
-.btnSkills {
+.btnColorUpdateProfile{
+  background-color: #1f618d;
   border-radius: 20px;
-  width: 200px;
-}
-
-.bgImage0{
-  background-image: url("../images/bgBlackboard.jpg");
-  background-repeat: repeat-y;
-}
-
-.btnHome {
-  border-radius: 20px;
-  width: 200px;
-}
-
-.divMargin{
-  margin-top: 70px;
-}
-
-.divMarginBreadcrums{
-  margin-top: 100px;
-}
-
-.imgMarginLogo{
-  margin-top: 80px;
+  width: 100%;
+  text-decoration: none;
 }
 
 .selectCountry{
@@ -93,44 +15,18 @@ a:hover{
   margin-left:37px;
 }
 
-/*.txtMarginImageProfile{
-  position: absolute;
-  right: 1%;
-  bottom: 17px;
-  width: 50px;
-  height: auto;
-}*/
-
-.txtMarginImageProfile{
-  position: absolute;
-  right: 195px;
-  bottom: 18px;
-  width: 50px;
-  height: auto;
-}
-
 .txtMarginNameProfile{
   position: absolute;
   right: 70px;
   bottom: 33px;
-  /*width: 50px;
-  height: auto;*/
 }
 
-.divShow{
-  display: block;
-}
-
-.divHide{
-  display: none;
-}
-
-.divOverflow{
+/*.divOverflow{
   width:auto;
   height:250px;
   overflow:scroll;
 }
-
+*/
 .topnav {
   overflow: hidden;
 }
@@ -170,28 +66,43 @@ a:hover{
   color: white;
 }
 
-/* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) {
-
+.containerChat {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
 }
 
-/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
-@media (min-width: 768px) {
-
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
 }
 
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {
-  .divSmall{
-    display: none;
-  }
-
-  .divLarge{
-    display: block;
-  }
+.containerChat::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
-/* Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
+.containerChat .imgChat {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  /*border-radius: 50%;*/
+}
 
+.containerChat .imgChat.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+}
+
+.time-right {
+  float: right;
+}
+
+.time-left {
+  float: left;
 }

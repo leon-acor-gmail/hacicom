@@ -581,6 +581,32 @@ class InfoSystem extends DataSystem
       return '1';
     }
 
+    public function deleteShotProfile($strShotSystem){
+      $strResp = 0;
+      $file_to_search = $strShotSystem;
+      $dir='../uploads';
+      $email = substr(basename($file_to_search),0,-57);
+      $files = scandir($dir);
+      foreach($files as $key => $value)
+      {
+        $realpath = $dir.DIRECTORY_SEPARATOR.$value;
+        $path = realpath($realpath);
+        if(!is_dir($path))
+        {
+          $rest = substr(basename($value),0,-57);
+          if($email == $rest)
+          {
+            if($file_to_search == $value)
+            {
+              unlink($path);
+              $strResp = 1;
+            }
+          }
+        }
+      }
+      return $strResp;
+    }
+
     public function updateShotProfile($arg){
       $objJson = json_decode(base64_decode($arg));
       $this->OpenDB();

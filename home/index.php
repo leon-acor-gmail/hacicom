@@ -4,27 +4,10 @@ if(isset($_GET['result']))
 {
   $_SESSION['login'] = true;
   $objJson = json_decode(base64_decode($_GET['arg']));
-  //echo base64_decode($_GET['arg']);
-  /*$objJson = '';
-  if($_GET['result']==0)
-  {
-    $objJson = json_decode(base64_decode($_GET['arg']));
-    echo base64_decode($_GET['arg']);
-  }
-  if($_GET['result']==1)
-  {
-    $objJson = json_decode(base64_decode($_GET['arg']));
-    echo base64_decode($_GET['arg']);
-  }*/
-  /*else
-  {
-    header('Location: ../?arg='.$objJson->strUs);
-  }*/
 }
 else
 {
   //new user
-
   if(isset($_SESSION['signup']))
   {
     $_SESSION = array();
@@ -36,19 +19,13 @@ else
         );
     }
     session_destroy();
-
     $iC=2;
     $json = base64_decode($_GET['arg']);
     header('Location: ../bsns/bsnsSignup.php?arg='.$json.'&c='.$iC);
   }
   else{
     header('Location: https://www.hagamoscine.com');
-    //header('Location: https://www.google.com');
   }
-
-  /*$iC=2;
-  $json = base64_decode($_GET['arg']);
-  header('Location: ../bsns/bsnsSignup.php?arg='.$json.'&c='.$iC);*/
 }
 ?>
 <!DOCTYPE html>
@@ -57,99 +34,51 @@ else
   <title>Hagamos Cine</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" href="../images/carrete.png">
+  <link rel="icon" type="image/svg" href="../images/favicon.svg">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../styles/cssTemplate.css">
   <link rel="stylesheet" href="../styles/cssHome.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="../scripts/jsResources.js" ></script>
   <script src="../scripts/jquery.md5.js"></script>
-  <style>
-
-  .containerChat {
-    border: 2px solid #dedede;
-    background-color: #f1f1f1;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px 0;
-  }
-
-  .darker {
-    border-color: #ccc;
-    background-color: #ddd;
-  }
-
-  .containerChat::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-
-  .containerChat .imgChat {
-    float: left;
-    max-width: 60px;
-    width: 100%;
-    margin-right: 20px;
-    /*border-radius: 50%;*/
-  }
-
-  .containerChat .imgChat.right {
-    float: right;
-    margin-left: 20px;
-    margin-right:0;
-  }
-
-  .time-right {
-    float: right;
-
-  }
-
-  .time-left {
-    float: left;
-
-  }
-  </style>
 </head>
-<body class="w3-black">
+<body class="bgColor w3-text-white txtFontFamily">
 <script>
   var objResources = null;
   $(document).ready(function(){
     objResources = new jsResources();
     getFieldsSkills();
-    getCountries();
-    getUsersLinked();
-    getUserRequest();
-    getChat();
 
-    window.setInterval(function(){getUserRequest()}, 3000);
-
+    window.setInterval(function(){
+      getUserRequest();
+      //getChat();
+    }, 10000);
 
     $('#btnSaveDataMsgLarge').click(function(a){
         var b = document.getElementsByTagName('form')[0];
         if(b.checkValidity())
         {
           strToMsg=$('#lblToMsgEmail').text();
-          //alert(strToMsg);
-          if(strToMsg.length>0){
-          objJson = {
-            arg1:'<?php echo $objJson->email ?>',
-            arg2:strToMsg,
-            arg3:$('#txtSaveDataMsgLarge').val()
-          };
-          strJson=JSON.stringify(objJson);
-          //alert(strJson);
-          base=objResources.utf8_to_b64(strJson);
-          $.post('../bsns/bsnsHome.php',{c:10,arg:base},function(r){
-            alert(r);
-          });
-        }
-        else{
-          alert('Debes elegir a alguien de tu crew para enviar mensaje');
-        }
-        //alert('Leo');
+          if(strToMsg.length>0)
+          {
+            objJson = {
+              arg1:'<?php echo $objJson->email ?>',
+              arg2:strToMsg,
+              arg3:$('#txtSaveDataMsgLarge').val()
+            };
+            strJson=JSON.stringify(objJson);
+            base=objResources.utf8_to_b64(strJson);
+            $.post('../bsns/bsnsHome.php',{c:10,arg:base},function(r){
+              alert(r);
+            });
+          }
+          else{
+            setDivAlert('Atención','Debes elegir a alguien de tu crew para enviar mensaje',false);
+          }
           a.preventDefault();
         }
     });
@@ -175,7 +104,6 @@ else
     });
 
     $('#icoMainLarge').click(function(){
-      //alert('icoMainLarge');
       $("#icoMainLarge").removeClass("w3-text-gray w3-hover-text-light-grey").addClass( "w3-text-light-grey w3-hover-text-grey" );
       $("#icoMyCrewLarge").removeClass("w3-text-light-grey w3-hover-text-grey").addClass( "w3-text-gray w3-hover-text-light-grey" );
       $("#icoNotificationsLarge").removeClass("w3-text-light-grey w3-hover-text-grey").addClass( "w3-text-gray w3-hover-text-light-grey" );
@@ -189,7 +117,6 @@ else
     });
 
     $('#icoMainSmall').click(function(){
-      //alert('icoMainSmall');
       $("#icoMainSmall").removeClass("w3-text-gray w3-hover-text-light-grey").addClass( "w3-text-light-grey w3-hover-text-grey" );
       $("#icoMyCrewSmall").removeClass("w3-text-light-grey w3-hover-text-grey").addClass( "w3-text-gray w3-hover-text-light-grey" );
       $("#icoNotificationsSmall").removeClass("w3-text-light-grey w3-hover-text-grey").addClass( "w3-text-gray w3-hover-text-light-grey" );
@@ -202,7 +129,6 @@ else
     });
 
     $('#icoMyCrewLarge').click(function(){
-      //alert('icoMyCrewLarge');
       $("#icoMyCrewLarge").removeClass("w3-text-gray w3-hover-text-light-grey").addClass( "w3-text-light-grey w3-hover-text-grey" );
       $("#icoMainLarge").removeClass("w3-text-light-grey w3-hover-text-grey").addClass( "w3-text-gray w3-hover-text-light-grey" );
       $("#icoNotificationsLarge").removeClass("w3-text-light-grey w3-hover-text-grey").addClass( "w3-text-gray w3-hover-text-light-grey" );
@@ -215,7 +141,6 @@ else
     });
 
     $('#icoMyCrewSmall').click(function(){
-      //alert('icoMyCrewSmall');
       $("#icoMyCrewSmall").removeClass("w3-text-gray w3-hover-text-light-grey").addClass( "w3-text-light-grey w3-hover-text-grey" );
       $("#icoMainSmall").removeClass("w3-text-light-grey w3-hover-text-grey").addClass( "w3-text-gray w3-hover-text-light-grey" );
       $("#icoNotificationsSmall").removeClass("w3-text-light-grey w3-hover-text-grey").addClass( "w3-text-gray w3-hover-text-light-grey" );
@@ -228,7 +153,6 @@ else
     });
 
     $('#icoNotificationsLarge').click(function(){
-      //alert('icoNotificationsLarge');
       $("#icoNotificationsLarge").removeClass("w3-text-gray w3-hover-text-light-grey").addClass( "w3-text-light-grey w3-hover-text-grey" );
       $("#icoMyCrewLarge").removeClass("w3-text-light-grey w3-hover-text-grey").addClass( "w3-text-gray w3-hover-text-light-grey" );
       $("#icoMainLarge").removeClass("w3-text-light-grey w3-hover-text-grey").addClass( "w3-text-gray w3-hover-text-light-grey" );
@@ -241,7 +165,6 @@ else
     });
 
     $('#icoNotificationsSmall').click(function(){
-      //alert('icoNotificationsSmall');
       $("#icoNotificationsSmall").removeClass("w3-text-gray w3-hover-text-light-grey").addClass( "w3-text-light-grey w3-hover-text-grey" );
       $("#icoMyCrewSmall").removeClass("w3-text-light-grey w3-hover-text-grey").addClass( "w3-text-gray w3-hover-text-light-grey" );
       $("#icoMainSmall").removeClass("w3-text-light-grey w3-hover-text-grey").addClass( "w3-text-gray w3-hover-text-light-grey" );
@@ -254,7 +177,6 @@ else
     });
 
     $('#icoMessagesLarge').click(function(){
-      //alert('icoMessagesLarge');
       $("#icoMessagesLarge").removeClass("w3-text-gray w3-hover-text-light-grey").addClass( "w3-text-light-grey w3-hover-text-grey" );
       $("#icoMyCrewLarge").removeClass("w3-text-light-grey w3-hover-text-grey").addClass( "w3-text-gray w3-hover-text-light-grey" );
       $("#icoNotificationsLarge").removeClass("w3-text-light-grey w3-hover-text-grey").addClass( "w3-text-gray w3-hover-text-light-grey" );
@@ -267,7 +189,6 @@ else
     });
 
     $('#icoMessagesSmall').click(function(){
-      //alert('icoMessageSmall');
       $("#icoMessagesSmall").removeClass("w3-text-gray w3-hover-text-light-grey").addClass( "w3-text-light-grey w3-hover-text-grey" );
       $("#icoMyCrewSmall").removeClass("w3-text-light-grey w3-hover-text-grey").addClass( "w3-text-gray w3-hover-text-light-grey" );
       $("#icoNotificationsSmall").removeClass("w3-text-light-grey w3-hover-text-grey").addClass( "w3-text-gray w3-hover-text-light-grey" );
@@ -285,7 +206,6 @@ else
 
       $('#btnCallLarge').addClass( "active" );
       $('#btnLookforCrewLarge').removeClass("active");
-
     });
 
     $('#btnLookforCrewLarge').click(function(){
@@ -294,7 +214,6 @@ else
 
       $('#btnCallLarge').removeClass( "active" );
       $('#btnLookforCrewLarge').addClass("active");
-
     });
 
     $('#btnCallSmall').click(function(){
@@ -303,7 +222,6 @@ else
 
       $('#btnCallSmall').addClass( "active" );
       $('#btnLookforCrewSmall').removeClass("active");
-
     });
 
     $('#btnLookforCrewSmall').click(function(){
@@ -312,15 +230,16 @@ else
 
       $('#btnCallSmall').removeClass( "active" );
       $('#btnLookforCrewSmall').addClass("active");
-
     });
 
+    var strShotSystem = '../uploads/<?php echo $objJson->shotSystem ?>';
+    var strName = '<?php echo $objJson->name ?>';
+    objResources.getShotOrientation(strShotSystem,'Icon',$('#divShotSystemIcon'),$('#divLoader'),strName);
   });
 
   function setToMsg(strToName,strToEmail){
     $('#lblToMsgEmail').text(strToEmail);
     $('#lblToMsgName').text('Enviar mensaje a '+strToName);
-
   }
 
   function getChat(){
@@ -330,7 +249,6 @@ else
     $.post('../bsns/bsnsHome.php',{c:5,arg:base},function(r){
       respContacts = objResources.b64_to_utf8(r);
       objResources.populateListChatContacts($('#divGetChatLargeContacts'),respContacts);
-      //objResources.populateListChatMessages($('#divGetChatLargeMessagesBottom'),respMessages);
     });
   }
 
@@ -344,11 +262,12 @@ else
     objResources.populateLookupPlaceSpan($('#divDropboxCountriesSmallSpan'),strElement,strCode,idElement,'Small');
   }
 
-
   function getFieldsSkills(){
+    $('#divLoader').show();
     $.post('../bsns/bsnsLoad.php',{c:11},function(r){
       objResources.populateDropboxFieldsSkils($('#divDropboxFieldsSkillsLarge'),r,'Large');
       objResources.populateDropboxFieldsSkils($('#divDropboxFieldsSkillsSmall'),r,'Small');
+      getCountries();
     });
   }
 
@@ -356,6 +275,7 @@ else
     $.post('../bsns/bsnsLoad.php',{c:1},function(r){
       objResources.populateDropboxCountries($('#divDropboxCountriesLarge'),r,'Large');
       objResources.populateDropboxCountries($('#divDropboxCountriesSmall'),r,'Small');
+      getUsersLinked();
     });
   }
 
@@ -367,7 +287,6 @@ else
       resp = objResources.b64_to_utf8(r);
       objResources.populateCardsLookupResults($('#divGetUsersLinkedLarge'),resp,'<?php echo $objJson->email ?>',0,1,'<?php echo $objJson->nickname ?>');
       objResources.populateCardsLookupResults($('#divGetUsersLinkedSmall'),resp,'<?php echo $objJson->email ?>',1,1,'<?php echo $objJson->nickname ?>');
-      //alert(strJson);
     });
   }
 
@@ -376,35 +295,45 @@ else
     strJson=JSON.stringify(objJson);
     base=objResources.utf8_to_b64(strJson);
     $.post('../bsns/bsnsHome.php',{c:7,arg:base},function(r){
-      //alert(r.length);
-      //if(r.length!=43){
         arrR=r.split('|');
         r0 = objResources.b64_to_utf8(arrR[0]);
         r1 = objResources.b64_to_utf8(arrR[1]);
-        /*r2 = JSON.parse(objResources.b64_to_utf8(arrR[2]));
-        r3 = JSON.parse(objResources.b64_to_utf8(arrR[3]));*/
         r2=arrR[2];
         r3=arrR[3];
         totalAlertNotification=parseInt(r2)+parseInt(r3);
-        //alert(r3);
       if(totalAlertNotification>0){
         $('#badgeNotificationLarge').html(totalAlertNotification);
         $('#badgeNotificationLarge').css('display','block');
         $('#badgeNotificationSmall').css('display','block');
         objResources.populateUserRequest($('#divGetNotificationsLarge'),r0,r1,0);
         objResources.populateUserRequest($('#divGetNotificationsSmall'),r0,r1,1);
+        //getChat();
       }
       else {
         $('#divGetNotificationsLarge').html('No tienes notificaciones');
         $('#divGetNotificationsSmall').html('No tienes notificaciones');
         $('#badgeNotificationLarge').css('display','none');
         $('#badgeNotificationSmall').css('display','none');
+        //getChat();
       }
+      $('#divLoader').hide();
     });
   }
 
+  function setDivAlert(strHeaderMsg,strMsg,bPremium){
+    if(bPremium){
+      $('#btnGetPremium').css("display", "block");
+    }
+    else {
+      $('#btnGetPremium').css("display", "none");
+    }
+    $('#txtMsgHeaderAlert').text(strHeaderMsg);
+    $('#txtMsgAlert').text(strMsg);
+    $('#divAlert').show();
+  }
 
   function getDropboxFieldsSkills(strResponsive){
+    $('#divLoader').show();
     objJson = {};
     objJson.email = '<?php echo $objJson->email ?>';
     $.post('../bsns/bsnsIndex.php',{c:2},function(r){
@@ -420,7 +349,8 @@ else
       var z = Number(r)+1;
       if(iIndex==z)
       {
-          alert('Necesitas seleccionar una habilidad');
+        $('#divLoader').hide();
+        setDivAlert('Atención','Necesitas seleccionar al menos una habilidad',false);
       }
       else
       {
@@ -437,7 +367,8 @@ else
           z = Number(s)+1;
          if(iIndex==z)
          {
-             alert('Necesitas seleccionar una hubicación');
+           $('#divLoader').hide();
+           setDivAlert('Atención','Necesitas seleccionar al menos una hubicación',false);
          }
          else
          {
@@ -447,6 +378,7 @@ else
               resp = objResources.b64_to_utf8(t);
               objResources.populateCardsLookupResults($('#divCardsLookupResultsLarge'),resp,'<?php echo $objJson->email ?>',0,0,'<?php echo $objJson->nickname ?>');
               objResources.populateCardsLookupResults($('#divCardsLookupResultsSmall'),resp,'<?php echo $objJson->email ?>',1,0,'<?php echo $objJson->nickname ?>');
+              $('#divLoader').hide();
             });
           }
         });
@@ -454,15 +386,15 @@ else
   });
 }
 </script>
-<div class="container txtLineHKGrotesk">
+<div class="container">
   <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:rgba(255, 255, 255, 0.23);box-shadow: 1px 1px 2px grey;" >
-    <a class="navbar-brand w3-margin divSmall" href="#"><img style="width:190px;height:auto;" src="../images/web-brand-logotipo-2.png" alt="logo hagamos cine"></a>
-    <a class="navbar-brand w3-margin divLarge" href="#"><img src="../images/web-brand-logotipo-2.png" alt="logo hagamos cine"></a>
+    <a class="navbar-brand w3-margin divSmall" href="#"><img style="width:190px;height:auto;" src="../images/logo2.svg" alt="Logo Hagamos Cine"></a>
+    <a class="navbar-brand w3-margin divLarge" href="#"><img src="../images/logo2.svg" alt="Logo Hagamos Cine"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <a title="Página de Inicio" class="nav-link divLarge" href="#"><i id="icoMainLarge" class="fa fa-home w3-xxlarge w3-text-light-grey w3-hover-text-grey txtMarginIcon"></i></a>
             <a title="Página de Inicio" id="icoMainSmall" class="nav-link divSmall w3-large w3-text-light-grey w3-hover-text-grey" href="#">Principal</a>
@@ -479,41 +411,39 @@ else
             <a title="Página de Centro de Mensajes" class="nav-link divLarge" href="#"><i id="icoMessagesLarge" class="fa fa-comments w3-xxlarge w3-text-gray w3-hover-text-light-grey txtMarginIcon"></i></a>
             <a title="Página de Centro de Mensajes" id="icoMessagesSmall" class="nav-link divSmall w3-large w3-text-gray w3-hover-text-light-grey" href="#">Centro de mensajes</a>
           </li>
-          <li class="nav-item divLarge">
-            <a class="nav-link" href="#"><img src="../uploads/<?php echo $objJson->shotSystem ?>" class="txtMarginImageProfile" alt="shot"></a>
+          <li class="nav-item w3-margin divSmall">
+            <a class="w3-large"><?php echo $objJson->nickname ?></a><br>
+            <a id="btnUpdateProfileSmall" class="w3-button btnColorUpdateProfile">Actualizar perfil</a>
+            <a href="../bsns/bsnsLogout.php" class="w3-button btnColorHaCi">Cerrar sesión</a>
           </li>
+        </ul>
+        <ul class="navbar-nav">
           <li class="nav-item dropdown txtMarginNameProfile divLarge">
             <a class="nav-link dropdown-toggle w3-medium" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <?php echo $objJson->name ?>
+              <?php echo $objJson->nickname ?>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a id="btnUpdateProfileLarge" class="dropdown-item" href="#">Actualizar perfil</a>
               <a class="dropdown-item" href="../bsns/bsnsLogout.php">Cerrar sesión</a>
             </div>
           </li>
-          <li class="nav-item w3-margin divSmall">
-            <a class="w3-large"><?php echo $objJson->name ?></a><br>
-            <a id="btnUpdateProfileSmall" class="btn btn-success">Actualizar perfil</a>
-            <a href="../bsns/bsnsLogout.php" class="btn btnColorHaCi">Cerrar sesión</a>
+          <li class="nav-item divLarge">
+            <a class="nav-link" href="#">
+              <div id="divShotSystemIcon"></div>
+            </a>
           </li>
         </ul>
       </div>
   </nav>
   <div id="divMainLarge" class="divLarge">
     <div id="divChildMainLarge" class="divShow">
-      <!--<div class="row w3-margin">
-        <div class="col">-->
-          <div class="topnav">
-            <a class="active aNavElement" id="btnCallLarge">Buscar convocatorias</a>
-            <a class="aNavElement" id="btnLookforCrewLarge">Buscar crew</a>
-          </div>
-          <!--<button id="btnCallLarge" class="btn btnColorHaCi">Convocatorias</button>
-          <button id="btnLookforCrewLarge" class="btn btnColorHaCi">Crew</button>-->
-        <!--</div>
-      </div>-->
+      <div class="topnav">
+        <a class="active aNavElement txtHover" id="btnCallLarge">Buscar convocatorias</a>
+        <a class="aNavElement txtHover" id="btnLookforCrewLarge">Buscar crew</a>
+      </div>
       <div id="divCallLarge" class="row w3-margin divShow">
         <div class="col">
-          <label>Estas son las convocatorias</label>
+          <label>En construcción</label>
         </div>
       </div>
       <div id="divCrewLookforLarge" class="row w3-margin divHide">
@@ -530,14 +460,11 @@ else
             <div id="divDropboxCountriesLargeSpan"></div>
           </div>
           <div class="col">
-            <button id="btnLookupLarge" class="btn btnColorHaCi" style="width:auto;"><i class="fa fa-search"></i></button>
+            <button id="btnLookupLarge" class="w3-button btnColorHaCi" style="width:auto;"><i class="fa fa-search"></i></button>
           </div>
           <div class="col"></div>
           <div class="col"></div>
         </div>
-        <!--<div class="row w3-margin">
-          <div class="col">Estos son los resultados</div>
-        </div>-->
         <div class="row">
           <div class="col-1"></div>
           <div class="col-10">
@@ -551,22 +478,12 @@ else
   <div id="divMainSmall" class="divSmall">
     <div id="divChildMainSmall" class="divShow">
       <div class="topnav">
-        <a class="active aNavElement" id="btnCallSmall">Convocatorias</a>
-        <a class="aNavElement" id="btnLookforCrewSmall">Crew</a>
+        <a class="active aNavElement txtHover" id="btnCallSmall">Buscar convocatorias</a>
+        <a class="aNavElement txtHover" id="btnLookforCrewSmall">Buscar crew</a>
       </div>
-      <!--<div class="row w3-margin">
-        <div class="col">
-          <button id="btnCallSmall" class="btn btnColorHaCi" style="width:100%;">Convocatorias</button>
-        </div>
-      </div>
-      <div class="row w3-margin">
-        <div class="col">
-          <button id="btnLookforCrewSmall" class="btn btnColorHaCi" style="width:100%;">Crew</button>
-        </div>
-      </div>-->
       <div id="divCallSmall" class="row w3-margin divShow">
         <div class="col">
-          <label>Estas son las convocatorias</label>
+          <label>En construcción</label>
         </div>
       </div>
       <div id="divCrewLookforSmall" class="row w3-margin divHide">
@@ -587,12 +504,9 @@ else
           </div>
           <div class="row">
             <div class="col" style="margin-top:10px;margin-bottom:10px;">
-              <button id="btnLookupSmall" class="btn btnColorHaCi" style="width:100%;"><i class="fa fa-search"></i></button>
+              <button id="btnLookupSmall" class="w3-button btnColorHaCi" style="width:100%;"><i class="fa fa-search"></i></button>
             </div>
           </div>
-        <!--<div class="row w3-margin">
-          <div class="col">Estos son los resultados</div>
-        </div>-->
         <div id="divCardsLookupResultsSmall"></div>
       </div>
     </div>
@@ -601,7 +515,7 @@ else
     <div id="divChildMyCrewLarge" class="divHide">
       <div class="topnav">
         <!--<a class="active aNavElement" id="btnMyCallLarge">Mis convocatorias</a>-->
-        <a class="active aNavElement" id="btnLookforMyCrewLarge">Mi crew</a>
+        <a class="active aNavElement txtHover" id="btnLookforMyCrewLarge">Mi crew</a>
       </div>
       <div class="row">
         <div class="col-1"></div>
@@ -610,44 +524,37 @@ else
         </div>
         <div class="col-1"></div>
       </div>
-
     </div>
   </div>
   <div id="divMyCrewSmall" class="divSmall">
     <div id="divChildMyCrewSmall" class="divHide">
       <div class="topnav">
         <!--<a class="active aNavElement" id="btnMyCallSmall">Mis convocatorias</a>-->
-        <a class="active aNavElement" id="btnLookforMyCrewSmall">Mi crew</a>
+        <a class="active aNavElement txtHover" id="btnLookforMyCrewSmall">Mi crew</a>
       </div>
       <div id="divGetUsersLinkedSmall"></div>
     </div>
   </div>
   <div id="divNotificationsLarge" class="divLarge">
     <div id="divChildNotificationsLarge" class="divHide">
-      <!--<label>En construcción divNotificationsLarge</label>-->
-      <!--<label>En construcción</label>-->
       <div class="row w3-margin">
         <div class="col-1"></div>
         <div class="col-10">
-          <div id="divGetNotificationsLarge"></div>
+          <div id="divGetNotificationsLarge">No tienes notificaciones</div>
         </div>
         <div class="col-1"></div>
       </div>
-
     </div>
   </div>
   <div id="divNotificationsSmall" class="divSmall">
     <div id="divChildNotificationsSmall" class="divHide">
-      <!--<label>En construcción divNotificationsSmall</label>-->
-      <!--<label>En construcción</label>-->
-      <div id="divGetNotificationsSmall"></div>
+      <div id="divGetNotificationsSmall">No tienes notificaciones</div>
     </div>
   </div>
   <div id="divMessagesLarge" class="divLarge">
     <div id="divChildMessagesLarge" class="divHide">
-      <!--<label>En construcción divMessagesLarge</label>-->
-      <!--<label>En construcción</label>-->
-      <div id="divGetChatLarge">
+      <label>En construcción</label>
+      <!--<div id="divGetChatLarge">
         <div class="row">
           <div class="col-3">
             <div id="divGetChatLargeContacts" class="w3-round w3-bar-block" style="background-color:rgba(255,255,255,0.55);margin-top:10px;"></div>
@@ -687,33 +594,52 @@ else
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
   <div id="divMessagesSmall" class="divSmall">
     <div id="divChildMessagesSmall" class="divHide">
-      <!--<label>En construcción divMessagesSmall</label>-->
       <label>En construcción</label>
     </div>
   </div>
-  <div>
-  <!--<div style="background-image: url('../images/web-brand-cintafondo.png');">-->
-    <div class="divLarge">
-      <div class="row w3-margin w3-padding">
-        <div class="col w3-margin w3-padding">
-          <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
-        </div>
-      </div>
-    </div>
-    <div class="divSmall">
-      <div class="row w3-margin w3-padding w3-center">
-        <div class="col w3-margin w3-padding">
-          <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
-        </div>
-      </div>
+  <div class="row w3-margin w3-padding txtFooter">
+    <div class="col w3-margin w3-padding">
+      <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
     </div>
   </div>
 </div>
-<div id="divModalUserLinkedProfile" class="w3-modal w3-animate-opacity"></div>
+<div id="divModalUserSeeProfile" class="w3-modal w3-animate-opacity"></div>
+<div id="divLoader" class="w3-modal">
+  <div class="w3-modal-content">
+    <div class="imgLoader"></div>
+  </div>
+</div>
+<div id="divAlert" class="w3-modal">
+ <div class="w3-modal-content">
+   <div class="w3-container w3-indigo w3-text-white w3-padding">
+     <span onclick="document.getElementById('divAlert').style.display='none'" class="w3-button w3-display-topright"><i class="fa fa-times w3-large"></i></span>
+     <p id="txtMsgHeaderAlert" class="w3-xlarge"></p>
+     <p id="txtMsgAlert"></p>
+     <button onclick="$('#divAlert').hide();" class="w3-button w3-teal w3-block w3-left" style="margin-top:5px;width:50%;">Continuar</button>
+     <button id="btnGetPremium" onclick="$('#divAlert').hide();alert('Comprar Premium: En construcción');" class="w3-button w3-purple w3-block w3-right" style="display:none;margin-top:5px;width:50%;"><i class="fa fa-star w3-text-yellow w3-large"></i> Get Premium</button>
+   </div>
+ </div>
+</div>
+<div id="divAlertUserLink" class="w3-modal">
+ <div class="w3-modal-content">
+   <div class="w3-container w3-indigo w3-text-white w3-padding">
+     <span onclick="document.getElementById('divAlertUserLink').style.display='none'" class="w3-button w3-display-topright"><i class="fa fa-times w3-large"></i></span>
+     <p class="w3-xlarge">Atención</p>
+     <p id="txtMsgAlertUserLink"></p>
+     <label id="btnHashIdAlert" style="display:none;"></label>
+     <label id="strEmailOwnAlert" style="display:none;"></label>
+     <label id="strEmailLinkedAlert" style="display:none;"></label>
+     <label id="strNicknameLinkedAlert" style="display:none;"></label>
+     <label id="strNicknameOwnAlert" style="display:none;"></label>
+     <button onclick="objResources.setUsersLink($('#btnHashIdAlert').text(),$('#strEmailOwnAlert').text(),$('#strEmailLinkedAlert').text(),$('#strNicknameLinkedAlert').text(),$('#strNicknameOwnAlert').text(),true);$('#divAlertUserLink').hide();" class="w3-button w3-teal w3-block w3-left" style="margin-top:5px;width:50%;">Aceptar</button>
+     <button onclick="$('#divAlertUserLink').hide();" class="w3-button w3-pink w3-block w3-right" style="margin-top:5px;width:50%;">Cancelar</button>
+   </div>
+ </div>
+</div>
 </body>
 </html>

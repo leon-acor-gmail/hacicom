@@ -1,15 +1,15 @@
-<?php
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <title>Hagamos Cine</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" href="../images/carrete.png">
+  <link rel="icon" type="image/svg" href="../images/favicon.svg">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../styles/cssTemplate.css">
+  <link rel="stylesheet" href="../styles/cssSkills.css">
   <link rel="stylesheet" href="../styles/cssLoad.css">
   <link rel="stylesheet" href="../styles/cssCheckbox.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -17,7 +17,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="../scripts/jsResources.js"></script>
 </head>
-<body class="w3-black">
+<body class="bgColor w3-text-white txtFontFamily">
 <script>
   var objResources = null;
   $(document).ready(function(){
@@ -164,30 +164,27 @@
 
   function getFieldsSkills(){
     $.post('../bsns/bsnsLoad.php',{c:11},function(r){
-      //alert(r);
-      objResources.populateFieldsSkills($('#divFieldsSkills'),r);
+      objResources.populateFieldsSkills($('#divFieldsSkills'),r,'Small');
     });
   }
 
   function setColorField(element){
-    /*if($(element).hasClass('collapseColorHaCi')){
-      $(element).removeClass('collapseColorHaCi').addClass('collapseColorHaCiSelected');
-    }
-    else if ($(element).hasClass('collapseColorHaCiSelected')) {
-      $(element).removeClass('collapseColorHaCiSelected').addClass('collapseColorHaCi');
-    }*/
+    $('.collapseColorHaCiSelected').each(function(i, obj) {
+        $(this).removeClass('collapseColorHaCiSelected').addClass('collapseColorHaCi');
+    });
+    $(element).removeClass('collapseColorHaCi').addClass('collapseColorHaCiSelected');
   }
 
 </script>
-<div class="container bgImage0 txtLineHKGrotesk">
-  <div class="row w3-section w3-center">
-    <div class="col align-self-center">
-      <img src="../images/web-brand-logotipo-2.png" class="imgMarginLogo" srcset="../images/web-brand-logotipo-2@2x.png 2x,../images/web-brand-logotipo-2@3x.png 3x">
+<div class="container">
+  <div class="row">
+    <div class="col w3-center">
+      <img src="../images/logo2.svg" class="imgMarginLogo" alt="Logo hagamoscine">
     </div>
   </div>
   <div class="row w3-section">
     <div class="col w3-large">
-      Módulo de carga de cátalogos
+      Módulo de administración
     </div>
   </div>
   <div class="row">
@@ -211,7 +208,7 @@
               <label id="custom-file-label-large" class="custom-file-label" for="inputGroupFile">Elige la bandera del país</label>
               <a class="aCountry" href="https://www.countryflags.com/image-overview/" target="_blank" >Descarga la bandera en formato png y de tamaño medio</a>
             </div>
-            <button class="btn btnColorHaCi">Guardar</button>
+            <button class="w3-button w3-text-white btnColorHaCi">Guardar</button>
           </div>
         </form>
       </div>
@@ -241,7 +238,7 @@
               </div>
               <input id="txtField" type="text" class="form-control" placeholder="Nombre del area" name="name" maxlength="20" required>
             </div>
-            <button id="btnField" class="btn btnColorHaCi">Guardar</button>
+            <button id="btnField" class="w3-button w3-text-white btnColorHaCi">Guardar</button>
           </form>
         </div>
       </div>
@@ -271,7 +268,7 @@
               </div>
               <input id="txtSkill" type="text" class="form-control" placeholder="Nombre del interes" name="name" maxlength="30" required>
             </div>
-            <button id="btnSkill" class="btn btnColorHaCi">Guardar</button>
+            <button id="btnSkill" class="w3-button w3-text-white btnColorHaCi">Guardar</button>
           </form>
         </div>
       </div>
@@ -297,7 +294,7 @@
             <p class="card-text">Relaciona las areas con sus intereses</p>
             <div id="divPopulateFields"></div>
             <div id="divPopulateSkills"></div>
-            <button id="btnFieldsSkills" class="btn btnColorHaCi">Guardar</button>
+            <button id="btnFieldsSkills" class="w3-button w3-text-white btnColorHaCi">Guardar</button>
           </form>
         </div>
       </div>
@@ -337,26 +334,15 @@
               <span class="input-group-text"><i class="fa fa-chevron-right"></i></span>
               <input type="text" class="form-control" placeholder="mensaje" name="msg" required>
             </div>
-            <button type="submit" class="btn btn-primary">Enviar</button>
+            <button type="submit" class="w3-button w3-text-white btnColorHaCi">Enviar</button>
           </form>
         </div>
       </div>
     </div>
   </div>
-  <div style="background-image: url('../images/web-brand-cintafondo.png');">
-    <div class="divLarge">
-      <div class="row w3-margin w3-padding">
-        <div class="col w3-margin w3-padding">
-          <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
-        </div>
-      </div>
-    </div>
-    <div class="divSmall">
-      <div class="row w3-margin w3-padding w3-center">
-        <div class="col w3-margin w3-padding">
-          <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
-        </div>
-      </div>
+  <div class="row w3-margin w3-padding txtFooter">
+    <div class="col w3-margin w3-padding">
+      <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
     </div>
   </div>
 </div>

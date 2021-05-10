@@ -4,18 +4,17 @@
   <title>Hagamos Cine</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" href="../images/carrete.png">
+  <link rel="icon" type="image/svg" href="../images/favicon.svg">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../styles/cssTemplate.css">
   <link rel="stylesheet" href="../styles/cssLogin.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="../scripts/jsResources.js" ></script>
   <script src="../scripts/jquery.md5.js"></script>
 </head>
-<body class="w3-black">
+<body class="bgColor w3-text-white txtFontFamily">
 <script>
   var objResources = null;
   $(document).ready(function(){
@@ -25,6 +24,7 @@
         var b = document.getElementsByTagName('form')[1];
         if(b.checkValidity())
         {
+          $('#divLoader').show();
           jsonObj= {
             strUs:$('#txtLargeEmail').val(),
             arg2:$.md5($('#txtLargePwd').val())
@@ -33,11 +33,12 @@
           base64 = objResources.utf8_to_b64(json);
           $.post('../bsns/bsnsReset.php',{c:1,arg:base64},function(r){
             if(r==0){
-              alert('El usuario no existe');
+              $('#divLoader').hide();
+              setDivAlert('Atención','El usuario no existe');
             }
             else{
-              //alert(r);
-              alert('Se actualizó la contraseña correctamente');
+              $('#divLoader').hide();
+              setDivAlert('Atención','Se actualizó la contraseña correctamente');
             }
           });
           a.preventDefault();
@@ -48,6 +49,7 @@
         var b = document.getElementsByTagName('form')[0];
         if(b.checkValidity())
         {
+          $('#divLoader').show();
           jsonObj= {
             strUs:$('#txtSmallEmail').val(),
             arg2:$.md5($('#txtSmallPwd').val())
@@ -56,51 +58,56 @@
           base64 = objResources.utf8_to_b64(json);
           $.post('../bsns/bsnsReset.php',{c:1,arg:base64},function(r){
             if(r==0){
-              alert('El usuario no existe');
+              $('#divLoader').hide();
+              setDivAlert('Atención','El usuario no existe');
             }
             else{
-              //alert(r);
-              alert('Se actualizó la contraseña correctamente');
+              $('#divLoader').hide();
+              setDivAlert('Atención','Se actualizó la contraseña correctamente');
             }
           });
           a.preventDefault();
         }
     });
 
-  })
+  });
+
+  function setDivAlert(strHeaderMsg,strMsg){
+    $('#txtMsgHeaderAlert').text(strHeaderMsg);
+    $('#txtMsgAlert').text(strMsg);
+    $('#divAlert').show();
+  }
 </script>
-<div class="container bgImage0 txtLineHKGrotesk">
-  <div class="row w3-section">
-    <div class="col align-self-left">
-      <img src="../images/web-brand-logotipo-1.png" class="imgMarginLogo" srcset="../images/web-brand-logotipo-2@2x.png 2x,../images/web-brand-logotipo-2@3x.png 3x">
+<div class="container">
+  <div class="row divMarginLogo">
+    <div class="col">
+      <img src="../images/logo1.svg" alt="Logo Hagamos Cine">
     </div>
   </div>
   <div class="divSmall">
     <form>
-      <div class="row justify-content-center w3-section">
+      <div class="row">
         <div class="col">
           <label>Correo electrónico <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-          <input id="txtSmallEmail" type="text" class="form-control" maxlength="30" required>
+          <input id="txtSmallEmail" type="text" class="w3-input bgColor w3-text-white txtMargin" maxlength="30" required>
         </div>
       </div>
-      <div class="row justify-content-center w3-section">
+      <div class="row divMarginInput">
         <div class="col">
-          <label>Nueva contraseña <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-          <input id="txtSmallPwd" type="password" class="form-control" minlength="8" maxlength="24" required>
-          <a class="w3-right w3-padding" href="../login/">Iniciar sesión</a>
+          <label>Contraseña <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
+          <input id="txtSmallPwd" type="password" class="w3-input bgColor w3-text-white txtMargin" minlength="8" maxlength="24" required>
+          <span toggle="#txtSmallPwd" class="fa fa-fw fa-eye w3-large icoInput txtColorHaCi"></span>
+          <a class="w3-right w3-padding txtHover" href="../login/">Iniciar sesión</a>
         </div>
       </div>
-      <div class="row w3-center divMargin">
-        <div class="col"></div>
-        <input name="c" value="1" type="hidden">
-        <div class="col align-self-center"><button id="btnSmallReset" type="submit" class="btn btnColorHaCi btnLogin">Guardar contraseña</button></div>
-        <div class="col"></div>
+      <div class="row divMarginButton">
+        <div class="col w3-center"><button id="btnSmallReset" type="submit" class="w3-button btnColorHaCi">Guardar contraseña</button></div>
       </div>
     </form>
   </div>
   <div class="divLarge">
     <form>
-      <div class="row justify-content-center w3-section">
+      <div class="row">
         <div class="col-4"></div>
         <div class="col-4">
           <label>Correo electrónico <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
@@ -108,39 +115,43 @@
         </div>
         <div class="col-4"></div>
       </div>
-      <div class="row justify-content-center w3-section">
+      <div class="row divMarginInput">
         <div class="col-4"></div>
         <div class="col-4">
-          <label>Nueva contraseña <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
+          <label>Contraseña <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
           <input id="txtLargePwd" type="password" class="form-control" minlength="8" maxlength="24" required>
-          <a class="w3-right w3-padding" href="../login/">Iniciar sesión</a>
+          <span toggle="#txtLargePwd" class="fa fa-fw fa-eye w3-large icoInput txtColorHaCi"></span>
+          <a class="w3-right w3-padding txtHover" href="../login/">Iniciar sesión</a>
         </div>
         <div class="col-4"></div>
       </div>
-      <div class="row w3-center divMargin">
+      <div class="row w3-center divMarginButton">
         <div class="col"></div>
-        <input name="c" value="1" type="hidden">
-        <div class="col align-self-center"><button id="btnLargeReset" type="submit" class="btn btnColorHaCi btnLogin">Guardar contraseña</button></div>
+        <div class="col align-self-center"><button id="btnLargeReset" type="submit" class="w3-button btnColorHaCi">Guardar contraseña</button></div>
         <div class="col"></div>
       </div>
     </form>
   </div>
-  <div style="background-image: url('../images/web-brand-cintafondo.png');">
-    <div class="divLarge">
-      <div class="row w3-margin w3-padding">
-        <div class="col w3-margin w3-padding">
-          <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
-        </div>
-      </div>
-    </div>
-    <div class="divSmall">
-      <div class="row w3-margin w3-padding w3-center">
-        <div class="col w3-margin w3-padding">
-          <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
-        </div>
-      </div>
+  <div class="row w3-margin w3-padding txtFooter">
+    <div class="col w3-margin w3-padding">
+      <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
     </div>
   </div>
+</div>
+<div id="divLoader" class="w3-modal">
+  <div class="w3-modal-content">
+    <div class="imgLoader"></div>
+  </div>
+</div>
+<div id="divAlert" class="w3-modal">
+ <div class="w3-modal-content">
+   <div class="w3-container w3-indigo w3-text-white w3-padding">
+     <span onclick="document.getElementById('divAlert').style.display='none'" class="w3-button w3-display-topright"><i class="fa fa-times w3-large"></i></span>
+     <p id="txtMsgHeaderAlert" class="w3-xlarge"></p>
+     <p id="txtMsgAlert"></p>
+     <button onclick="$('#divAlert').hide();" class="w3-button w3-teal w3-block w3-left" style="margin-top:5px;width:50%;">Continuar</button>
+   </div>
+ </div>
 </div>
 </body>
 </html>

@@ -1,16 +1,6 @@
 <?php
 include ('bsnsInfoSystem.php');
 $objInfoSystem = new InfoSystem();
-//$json='';
-/*if($_POST['txtUploadResponsiveSmall']==1){
-  $json = json_decode(base64_decode($_POST['txtDataUploadSmall']));
-}
-elseif($_POST['txtUploadResponsiveLarge']==2){
-  $json = json_decode(base64_decode($_POST['txtDataUploadLarge']));
-}
-else {
-  echo 'Lo sentimos, ocurrio un error intenta de nuevo, gracias';
-}*/
 $target_dir = "../uploads/";
 $target_file_user = basename($_FILES["fileToUpload"]["name"]);
 $h = hash('ripemd160',$target_file_user);
@@ -18,8 +8,6 @@ $dat = date("Ymd_His");
 $fileType = pathinfo($target_file_user,PATHINFO_EXTENSION);
 $target_name = $_POST['arg'].'_'.$dat.'_'.$h.'.'.$fileType;
 $target_file = $target_dir.$target_name;
-//echo $json->email;
-//$target_file = $target_dir.basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 

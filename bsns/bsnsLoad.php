@@ -40,6 +40,10 @@ switch ($iC) {
     $r2 = $objInfoSystem->getCountSkillsByField();
      echo $r1.'|'.$r2;
     break;
+  case 12:
+    $r = $objInfoSystem->deleteShotProfile($_POST['arg']);
+    echo $r;
+    break;
   default:
     echo 'Error en busines load';
     break;
