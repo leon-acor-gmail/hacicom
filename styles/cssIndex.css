@@ -1,10 +1,10 @@
 .bgImage{
-  background-image: url("../images/bgcarrete.png");
-  background-repeat: repeat-y;
+  background-image:url("../images/bgcarrete.png");
+  background-repeat:repeat-y;
 }
 
 .txtMargin{
-  margin-top: 50px;
+  margin-top:50px;
 }
 
 .btnMargin{
@@ -12,11 +12,11 @@
 }
 
 .btnStyle{
-  width: 100%;
+  width:100%;
   border-radius:20px;
 }
 
 .imgSize{
-  width: 160px;
-  height: auto;
+  width:160px;
+  height:auto;
 }

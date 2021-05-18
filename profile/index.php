@@ -34,7 +34,7 @@ $json = str_replace('\n',' ',$json);
     objResources = new jsResources();
     getCountries();
     getCountriesToWork();
-    getFieldsSkills();
+    getFieldsSkills('<?php echo $json; ?>');
 
     $('.navbar-nav>li>a').on('click', function(){
       $('.navbar-collapse').collapse('hide');
@@ -44,7 +44,7 @@ $json = str_replace('\n',' ',$json);
         var b = document.getElementsByTagName('form')[1];
         if(b.checkValidity())
         {
-          setDataSmallJson();
+          setDataJson('Small');
           a.preventDefault();
         }
     });
@@ -53,7 +53,7 @@ $json = str_replace('\n',' ',$json);
         var b = document.getElementsByTagName('form')[2];
         if(b.checkValidity())
         {
-          setDataLargeJson();
+          setDataJson('Large');
           a.preventDefault();
         }
     });
@@ -65,75 +65,44 @@ $json = str_replace('\n',' ',$json);
 
   });
 
-  function setDataSmallJson(){
+  function setDataJson(strResponsive){
     $('#divLoader').show();
     $.post('../bsns/bsnsHome.php',{c:2},function(s){
       $.post('../bsns/bsnsIndex.php',{c:2},function(r){
         objJson = {
-          name:$('#txtSmallName').val(),
-          lastname:$('#txtSmallLastname').val(),
-          nickname:$('#txtSmallNickname').val(),
-          country:$('#selectSmallCountry').val(),
-          countryFlag:$('#selectSmallCountry').find(':selected').data('flag'),
-          bio:$('#txtSmallBio').val(),
-          yt:$('#txtSmallYT').val(),
-          ig:$('#txtSmallIG').val(),
-          vi:$('#txtSmallVI').val(),
+          name:$('#txtName'+strResponsive).val(),
+          lastname:$('#txtLastname'+strResponsive).val(),
+          nickname:$('#txtNickname'+strResponsive).val(),
+          country:$('#selectCountry'+strResponsive).val(),
+          countryFlag:$('#selectCountry'+strResponsive).find(':selected').data('flag'),
+          bio:$('#txtBio'+strResponsive).val(),
+          yt:$('#txtYT'+strResponsive).val(),
+          ig:$('#txtIG'+strResponsive).val(),
+          vi:$('#txtVI'+strResponsive).val(),
           email:'<?php echo $objJson->email ?>'
         };
         for(i=0;i<s;i++){
-          if($('#cbValPlaceSmall'+i).prop('checked')){
-            objJson['cbValPlace'+i]=$('#cbValPlaceSmall'+i).val();
+          if($('#cbValPlace'+strResponsive+i).prop('checked')){
+            objJson['cbValPlace'+i]=$('#cbValPlace'+strResponsive+i).val();
           }
         }
         for(i=0;i<r;i++){
-          if($('#cbValSkillSmall'+i).prop('checked')){
-            objJson['cbValSkill'+i]=$('#cbValSkillSmall'+i).val();
+          if($('#cbValSkill'+strResponsive+i).prop('checked')){
+            objJson['cbValSkill'+i]=$('#cbValSkill'+strResponsive+i).val();
           }
         }
         strJson = JSON.stringify(objJson);
         base64 = objResources.utf8_to_b64(strJson);
         $.post('../bsns/bsnsProfile.php',{c:1,arg:base64},function(t){
-          getFieldsSkills();
-          $('#divLoader').hide();
-          setDivAlert('Atención','Actualización exitosa');
-        });
-      });
-    });
-  }
-
-  function setDataLargeJson(){
-    $('#divLoader').show();
-    $.post('../bsns/bsnsHome.php',{c:2},function(s){
-      $.post('../bsns/bsnsIndex.php',{c:2},function(r){
-        objJson = {
-          name:$('#txtLargeName').val(),
-          lastname:$('#txtLargeLastname').val(),
-          nickname:$('#txtLargeNickname').val(),
-          country:$('#selectLargeCountry').val(),
-          countryFlag:$('#selectLargeCountry').find(':selected').data('flag'),
-          bio:$('#txtLargeBio').val(),
-          yt:$('#txtLargeYT').val(),
-          ig:$('#txtLargeIG').val(),
-          vi:$('#txtLargeVI').val(),
-          email:'<?php echo $objJson->email ?>'
-        };
-        for(i=0;i<s;i++){
-          if($('#cbValPlaceLarge'+i).prop('checked')){
-            objJson['cbValPlace'+i]=$('#cbValPlaceLarge'+i).val();
-          }
-        }
-        for(i=0;i<r;i++){
-          if($('#cbValSkillLarge'+i).prop('checked')){
-            objJson['cbValSkill'+i]=$('#cbValSkillLarge'+i).val();
-          }
-        }
-        strJson = JSON.stringify(objJson);
-        base64 = objResources.utf8_to_b64(strJson);
-        $.post('../bsns/bsnsProfile.php',{c:1,arg:base64},function(t){
-          getFieldsSkills();
-          $('#divLoader').hide();
-          setDivAlert('Atención','Actualización exitosa');
+          objJsonLogin= {arg1:'<?php echo $objJson->email; ?>'};
+          strJsonLogin = JSON.stringify(objJsonLogin);
+          base64Login = objResources.utf8_to_b64(strJsonLogin);
+          $.post('../bsns/bsnsHome.php',{c:11,arg:base64Login},function(u){
+            strJsonURL = objResources.b64_to_utf8(u);
+            $('#divLoader').hide();
+            getFieldsSkills(strJsonURL);
+            setDivAlert('Atención','Actualización exitosa');
+          });
         });
       });
     });
@@ -142,10 +111,10 @@ $json = str_replace('\n',' ',$json);
   function getCountries(){
     $('#divLoader').show();
     $.post('../bsns/bsnsIndex.php',{c:1},function(r){
-      objResources.populateSelectCountries($('#selectLargeCountry'),r);
-      objResources.populateSelectCountries($('#selectSmallCountry'),r);
-      $('#selectLargeCountry').val('<?php echo $objJson->country; ?>');
-      $('#selectSmallCountry').val('<?php echo $objJson->country; ?>');
+      objResources.populateSelectCountries($('#selectCountryLarge'),r);
+      objResources.populateSelectCountries($('#selectCountrySmall'),r);
+      $('#selectCountryLarge').val('<?php echo $objJson->country; ?>');
+      $('#selectCountrySmall').val('<?php echo $objJson->country; ?>');
       $('#divLoader').hide();
     });
   }
@@ -154,8 +123,8 @@ $json = str_replace('\n',' ',$json);
       $('#divLoader').show();
       $.post('../bsns/bsnsLoad.php',{c:1},function(r){
         $.post('../bsns/bsnsHome.php',{c:2},function(s){
-          objResources.populateListPlaces($('#divSmallPlaces'),r,'Small');
-          objResources.populateListPlaces($('#divLargePlaces'),r,'Large');
+          objResources.populateListPlaces($('#divPlacesSmall'),r,'Small');
+          objResources.populateListPlaces($('#divPlacesLarge'),r,'Large');
           objJson = JSON.parse('<?php echo $json; ?>');
           for(i=0;i<s;i++){
             for(j=0;j<s;j++){
@@ -172,15 +141,15 @@ $json = str_replace('\n',' ',$json);
       });
   }
 
-  function getFieldsSkills(){
+  function getFieldsSkills(strJsonURL){
     $('#divLoader').show();
     $.post('../bsns/bsnsLoad.php',{c:11},function(r){
-      objResources.populateFieldsSkills($('#divLargeFieldsSkills'),r,'Large');
-      objResources.populateFieldsSkills($('#divSmallFieldsSkills'),r,'Small');
-      objResources.populateFieldsSkillsSpan($('#divSmallFieldsSkillsSpan'),'<?php echo $json; ?>');
-      objResources.populateFieldsSkillsSpan($('#divLargeFieldsSkillsSpan'),'<?php echo $json; ?>');
+      objResources.populateFieldsSkills($('#divFieldsSkillsLarge'),r,'Large');
+      objResources.populateFieldsSkills($('#divFieldsSkillsSmall'),r,'Small');
+      objResources.populateFieldsSkillsSpan($('#divFieldsSkillsSpanSmall'),strJsonURL);
+      objResources.populateFieldsSkillsSpan($('#divFieldsSkillsSpanLarge'),strJsonURL);
       $.post('../bsns/bsnsIndex.php',{c:2},function(s){
-        objJson = JSON.parse('<?php echo $json; ?>');
+        objJson = JSON.parse(strJsonURL);
         for(i=0;i<s;i++){
           for(j=0;j<s;j++){
             if($('#cbValSkillLarge'+j).val()==objJson['cbValSkill'+i]){
@@ -234,17 +203,18 @@ $json = str_replace('\n',' ',$json);
             <a title="Ir a Página de Inicio" onclick="goHome(1);" id="icoBackMainSmall" class="nav-link divSmall w3-large w3-text-gray w3-hover-text-light-grey" href="#">Ir a inicio</a>
           </li>
           <li class="nav-item w3-margin divSmall">
-            <a class="w3-large"><?php echo $objJson->nickname ?></a><br>
-            <a href="../bsns/bsnsLogout.php" class="w3-button btnColorHaCi">Cerrar sesión</a>
+            <a class="w3-large"><?php echo $objJson->nickname; ?></a><br>
+            <a onclick="goHome(1);" class="w3-button w3-block w3-indigo" style="margin-top:15px;text-decoration: none;">Ir a inicio</a>
+            <a href="../bsns/bsnsLogout.php" class="w3-button w3-block w3-pink" style="margin-top:5px;text-decoration: none;">Cerrar sesión</a>
           </li>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item dropdown divLarge txtMarginNameProfile">
             <a class="nav-link dropdown-toggle w3-medium" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <?php echo $objJson->nickname ?>
+              <?php echo $objJson->nickname; ?>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#" onclick="goHome(1);">Regresar al Inicio</a>
+              <a class="dropdown-item" href="#" onclick="goHome(1);">Ir a inicio</a>
               <a class="dropdown-item" href="../bsns/bsnsLogout.php">Cerrar sesión</a>
             </div>
           </li>
@@ -259,9 +229,12 @@ $json = str_replace('\n',' ',$json);
 <div id="divUpdateProfile">
   <div class="card">
     <div class="card-header" id="divUpdateProfileShot">
-      <button class="btn btn-link collapsed txtColorHaCi txtHoverProfile" data-toggle="collapse" data-target="#divUpdateProfileShotData" aria-expanded="true" aria-controls="divUpdateProfileShotData">
-      Actualizar Headshot<!--<i class="fa fa-angle-down w3-right w3-xlarge"></i>-->
-      </button>
+      <div class="w3-container collapsed" data-toggle="collapse" data-target="#divUpdateProfileShotData" aria-expanded="true" aria-controls="divUpdateProfileShotData">
+        <button class="btn btn-link txtColorHaCi txtHoverProfile">
+          Actualizar Headshot
+        </button>
+        <i class="fa fa-angle-down txtColorHaCi w3-right w3-xlarge" style="cursor:pointer;"></i>
+      </div>
     </div>
     <div id="divUpdateProfileShotData" class="collapse bgColor" aria-labelledby="divUpdateProfileShot" data-parent="#divUpdateProfile">
       <div class="card-body">
@@ -302,9 +275,12 @@ $json = str_replace('\n',' ',$json);
   </div>
   <div class="card">
     <div class="card-header" id="divUpdateProfileInfo">
-      <button class="btn btn-link collapsed txtColorHaCi txtHoverProfile" data-toggle="collapse" data-target="#divUpdateProfileInfoData" aria-expanded="false" aria-controls="divUpdateProfileInfoData">
-        Actualizar Datos Generales<!--<i class="fa fa-angle-down w3-right w3-xlarge"></i>-->
-      </button>
+      <div class="w3-container collapsed" data-toggle="collapse" data-target="#divUpdateProfileInfoData" aria-expanded="false" aria-controls="divUpdateProfileInfoData">
+        <button class="btn btn-link txtColorHaCi txtHoverProfile">
+          Actualizar Datos Generales
+        </button>
+        <i class="fa fa-angle-down txtColorHaCi w3-right w3-xlarge" style="cursor:pointer;"></i>
+      </div>
     </div>
     <div id="divUpdateProfileInfoData" class="collapse bgColor" aria-labelledby="divUpdateProfileInfo" data-parent="#divUpdateProfile">
       <div class="card-body">
@@ -318,25 +294,25 @@ $json = str_replace('\n',' ',$json);
             <div class="row w3-section">
               <div class="col">
                 <label>Nombre <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-                <input id="txtSmallName" type="text" class="form-control" maxlength="40" value="<?php echo $objJson->name ?>" required>
+                <input id="txtNameSmall" type="text" class="form-control" maxlength="40" value="<?php echo $objJson->name ?>" required>
               </div>
             </div>
             <div class="row w3-section">
               <div class="col">
                 <label>Apellidos <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-                <input id="txtSmallLastname" type="text" class="form-control" maxlength="40" value="<?php echo $objJson->lastname ?>" required>
+                <input id="txtLastnameSmall" type="text" class="form-control" maxlength="40" value="<?php echo $objJson->lastname ?>" required>
               </div>
             </div>
             <div class="row w3-section">
               <div class="col">
                 <label>Nombre artístico <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-                <input id="txtSmallNickname" type="text" class="form-control" maxlength="20" value="<?php echo $objJson->nickname ?>" required>
+                <input id="txtNicknameSmall" type="text" class="form-control" maxlength="20" value="<?php echo $objJson->nickname ?>" required>
               </div>
             </div>
             <div class="row w3-section">
               <div class="col">
                 <label>País de residencia <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-                <select id="selectSmallCountry" class="form-select" style="width:100%;height:40px;" required></select>
+                <select id="selectCountrySmall" class="form-select" style="width:100%;height:40px;" required></select>
               </div>
             </div>
             <div class="row w3-section">
@@ -348,7 +324,7 @@ $json = str_replace('\n',' ',$json);
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-youtube-play"></i></span>
                   </div>
-                  <input id="txtSmallYT" type="text" class="form-control" maxlength="60" value="<?php echo $objJson->yt ?>" placeholder="Agregar URL">
+                  <input id="txtYTSmall" type="text" class="form-control" maxlength="60" value="<?php echo $objJson->yt ?>" placeholder="Agregar URL">
                 </div>
               </div>
             </div>
@@ -358,7 +334,7 @@ $json = str_replace('\n',' ',$json);
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-instagram"></i></span>
                   </div>
-                  <input id="txtSmallIG" type="text" class="form-control" maxlength="60" value="<?php echo $objJson->ig ?>" placeholder="Agregar URL">
+                  <input id="txtIGSmall" type="text" class="form-control" maxlength="60" value="<?php echo $objJson->ig ?>" placeholder="Agregar URL">
                 </div>
               </div>
             </div>
@@ -368,7 +344,7 @@ $json = str_replace('\n',' ',$json);
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-vimeo"></i></span>
                   </div>
-                  <input id="txtSmallVI" type="text" class="form-control" maxlength="60" value="<?php echo $objJson->vi ?>" placeholder="Agregar URL">
+                  <input id="txtVISmall" type="text" class="form-control" maxlength="60" value="<?php echo $objJson->vi ?>" placeholder="Agregar URL">
                 </div>
               </div>
             </div>
@@ -377,7 +353,7 @@ $json = str_replace('\n',' ',$json);
                 <div class="card w3">
                   <div class="card-body w3-text-gray">
                     <p class="card-title w3-large">Países disponibles para trabajar</p>
-                    <div id="divSmallPlaces" class="divOverflow"></div>
+                    <div id="divPlacesSmall" class="divOverflow"></div>
                   </div>
                 </div>
               </div>
@@ -385,14 +361,14 @@ $json = str_replace('\n',' ',$json);
             <div class="row w3-section">
               <div  class="col">
                 <label>Biografía <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-                <textarea id="txtSmallBio" class="form-control" rows="10" maxlength="1000" required><?php echo $objJson->bio ?></textarea>
+                <textarea id="txtBioSmall" class="form-control" rows="10" maxlength="1000" required><?php echo $objJson->bio ?></textarea>
               </div>
             </div>
             <div class="row w3-section">
               <div class="col">
                 <label>Habilidades <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-                <div id="divSmallFieldsSkillsSpan"></div>
-                <div id="divSmallFieldsSkills"></div>
+                <div id="divFieldsSkillsSpanSmall"></div>
+                <div id="divFieldsSkillsSmall"></div>
               </div>
             </div>
             <div class="row w3-section">
@@ -412,21 +388,21 @@ $json = str_replace('\n',' ',$json);
               <div class="row justify-content-around w3-section">
                 <div class="col-5">
                   <label>Nombre <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-                  <input id="txtLargeName" type="text" class="form-control" maxlength="40" value="<?php echo $objJson->name ?>" required>
+                  <input id="txtNameLarge" type="text" class="form-control" maxlength="40" value="<?php echo $objJson->name ?>" required>
                 </div>
                 <div class="col-5">
                   <label>Apellidos <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-                  <input id="txtLargeLastname" type="text" class="form-control" maxlength="40" value="<?php echo $objJson->lastname ?>" required>
+                  <input id="txtLastnameLarge" type="text" class="form-control" maxlength="40" value="<?php echo $objJson->lastname ?>" required>
                 </div>
               </div>
               <div class="row justify-content-around w3-section">
                 <div class="col-5">
                   <label>Nombre artístico <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-                  <input id="txtLargeNickname" type="text" class="form-control" maxlength="20" value="<?php echo $objJson->nickname ?>" required>
+                  <input id="txtNicknameLarge" type="text" class="form-control" maxlength="20" value="<?php echo $objJson->nickname ?>" required>
                 </div>
                 <div class="col-5">
                   <label>País de residencia <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-                  <select id="selectLargeCountry" class="form-select" style="width:100%;height:40px;" required></select>
+                  <select id="selectCountryLarge" class="form-select" style="width:100%;height:40px;" required></select>
                 </div>
               </div>
               <div class="row justify-content-around w3-section">
@@ -441,7 +417,7 @@ $json = str_replace('\n',' ',$json);
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-youtube-play"></i></span>
                     </div>
-                    <input id="txtLargeYT" type="text" class="form-control" maxlength="60" value="<?php echo $objJson->yt ?>" placeholder="Agregar URL">
+                    <input id="txtYTLarge" type="text" class="form-control" maxlength="60" value="<?php echo $objJson->yt ?>" placeholder="Agregar URL">
                   </div>
                 </div>
                 <div class="col-5">
@@ -449,7 +425,7 @@ $json = str_replace('\n',' ',$json);
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-instagram"></i></span>
                     </div>
-                    <input id="txtLargeIG" type="text" class="form-control" maxlength="60" value="<?php echo $objJson->ig ?>" placeholder="Agregar URL">
+                    <input id="txtIGLarge" type="text" class="form-control" maxlength="60" value="<?php echo $objJson->ig ?>" placeholder="Agregar URL">
                   </div>
                 </div>
               </div>
@@ -459,17 +435,17 @@ $json = str_replace('\n',' ',$json);
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-vimeo"></i></span>
                     </div>
-                    <input id="txtLargeVI" type="text" class="form-control" maxlength="60" value="<?php echo $objJson->vi ?>" placeholder="Agregar URL">
+                    <input id="txtVILarge" type="text" class="form-control" maxlength="60" value="<?php echo $objJson->vi ?>" placeholder="Agregar URL">
                   </div>
                   <br>
                   <label>Biografía <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-                  <textarea id="txtLargeBio" class="form-control" rows="10" maxlength="1000" required><?php echo $objJson->bio ?></textarea>
+                  <textarea id="txtBioLarge" class="form-control" rows="10" maxlength="1000" required><?php echo $objJson->bio ?></textarea>
                 </div>
                 <div class="col-5">
                   <div class="card w3">
                     <div class="card-body w3-text-gray">
                       <p class="card-title w3-large">Países disponibles para trabajar</p>
-                      <div id="divLargePlaces" class="divOverflow"></div>
+                      <div id="divPlacesLarge" class="divOverflow"></div>
                     </div>
                   </div>
                 </div>
@@ -478,8 +454,8 @@ $json = str_replace('\n',' ',$json);
                 <div class="col"></div>
                 <div class="col-11">
                   <label>Habilidades <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-                  <div id="divLargeFieldsSkillsSpan"></div>
-                  <div id="divLargeFieldsSkills"></div>
+                  <div id="divFieldsSkillsSpanLarge"></div>
+                  <div id="divFieldsSkillsLarge"></div>
                 </div>
                 <div class="col"></div>
               </div>
@@ -496,10 +472,8 @@ $json = str_replace('\n',' ',$json);
     </div>
   </div>
 </div>
-<div class="row w3-margin w3-padding txtFooter">
-  <div class="col w3-margin w3-padding">
-    <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
-  </div>
+<div class="divFooter txtFooter">
+  <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
 </div>
 </div>
 <div id="divLoader" class="w3-modal">

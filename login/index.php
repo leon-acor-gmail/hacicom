@@ -20,51 +20,20 @@
   $(document).ready(function(){
     objResources = new jsResources();
 
-    $('#btnLargeLogin').click(function(a){
+    $('#btnLoginLarge').click(function(a){
         var b = document.getElementsByTagName('form')[1];
         if(b.checkValidity())
         {
-          $('#divLoader').show();
-          jsonObj= {
-            arg1:$('#txtLargeEmail').val(),
-            arg2:$.md5($('#txtLargePwd').val())
-          };
-          json = JSON.stringify(jsonObj);
-          base64 = objResources.utf8_to_b64(json);
-          $.post('../bsns/bsnsLogin.php',{c:1,arg:base64},function(r){
-            if(r==0){
-              $('#divLoader').hide();
-              setDivAlert('Atención','El usuario y la contraseña no coincide');
-            }
-            else{
-              window.location.href = "../home/?arg="+r+"&result=1";
-            }
-          });
+          btnSaveData('Large');
           a.preventDefault();
         }
     });
 
-    $('#btnSmallLogin').click(function(a){
+    $('#btnLoginSmall').click(function(a){
         var b = document.getElementsByTagName('form')[0];
         if(b.checkValidity())
         {
-          $('#divLoader').show();
-          jsonObj= {
-            arg1:$('#txtSmallEmail').val(),
-            arg2:$.md5($('#txtSmallPwd').val())
-          };
-          json = JSON.stringify(jsonObj);
-          base64 = objResources.utf8_to_b64(json);
-
-          $.post('../bsns/bsnsLogin.php',{c:1,arg:base64},function(r){
-            if(r==0){
-              $('#divLoader').hide();
-              setDivAlert('Atención','El usuario y la contraseña no coincide');
-            }
-            else{
-              window.location.href = "../home/?arg="+r+"&result=1";
-            }
-          });
+          btnSaveData('Small');
           a.preventDefault();
         }
     });
@@ -84,6 +53,25 @@
 
   });
 
+  function btnSaveData(strResponsive){
+    $('#divLoader').show();
+    objJson= {
+      arg1:$('#txtEmail'+strResponsive).val(),
+      arg2:$.md5($('#txtPwd'+strResponsive).val())
+    };
+    strJson = JSON.stringify(objJson);
+    base64 = objResources.utf8_to_b64(strJson);
+    $.post('../bsns/bsnsLogin.php',{c:1,arg:base64},function(r){
+      if(r==0){
+        $('#divLoader').hide();
+        setDivAlert('Atención','Sin acceso, revisa tus credenciales');
+      }
+      else{
+        window.location.href = "../home/?arg="+r+"&result=1";
+      }
+    });
+  }
+
   function setDivAlert(strHeaderMsg,strMsg){
     $('#txtMsgHeaderAlert').text(strHeaderMsg);
     $('#txtMsgAlert').text(strMsg);
@@ -101,19 +89,19 @@
       <div class="row">
         <div class="col">
           <label>Correo electrónico <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-          <input id="txtSmallEmail" type="text" class="w3-input bgColor w3-text-white txtMargin" maxlength="30" required>
+          <input id="txtEmailSmall" type="text" class="w3-input bgColor w3-text-white txtMargin" maxlength="30" required>
         </div>
       </div>
       <div class="row divMarginInput">
         <div class="col">
           <label>Contraseña <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-          <input id="txtSmallPwd" type="password" class="w3-input bgColor w3-text-white txtMargin" minlength="8" maxlength="24" required>
-          <span toggle="#txtSmallPwd" class="fa fa-fw fa-eye w3-large icoInput txtColorHaCi"></span>
+          <input id="txtPwdSmall" type="password" class="w3-input bgColor w3-text-white txtMargin" minlength="8" maxlength="24" required>
+          <span toggle="#txtPwdSmall" class="fa fa-fw fa-eye w3-large icoInput txtColorHaCi"></span>
           <a class="w3-right w3-padding txtHover" href="../reset/">Olvide mi contraseña</a>
         </div>
       </div>
       <div class="row divMarginButton">
-        <div class="col w3-center"><button id="btnSmallLogin" type="submit" class="w3-button btnColorHaCi">Iniciar sesión</button></div>
+        <div class="col w3-center"><button id="btnLoginSmall" type="submit" class="w3-button btnColorHaCi">Iniciar sesión</button></div>
       </div>
     </form>
   </div>
@@ -123,7 +111,7 @@
         <div class="col-4"></div>
         <div class="col-4">
           <label>Correo electrónico <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-          <input id="txtLargeEmail" type="text" class="form-control" maxlength="30" required>
+          <input id="txtEmailLarge" type="text" class="form-control" maxlength="30" required>
         </div>
         <div class="col-4"></div>
       </div>
@@ -131,23 +119,21 @@
         <div class="col-4"></div>
         <div class="col-4">
           <label>Contraseña <i class="fa fa-asterisk txtColorHaCi w3-tiny"></i></label>
-          <input id="txtLargePwd" type="password" class="form-control" minlength="8" maxlength="24" required>
-          <span toggle="#txtLargePwd" class="fa fa-fw fa-eye w3-large icoInput txtColorHaCi"></span>
+          <input id="txtPwdLarge" type="password" class="form-control" minlength="8" maxlength="24" required>
+          <span toggle="#txtPwdLarge" class="fa fa-fw fa-eye w3-large icoInput txtColorHaCi"></span>
           <a class="w3-right w3-padding txtHover" href="../reset/">Olvide mi contraseña</a>
         </div>
         <div class="col-4"></div>
       </div>
       <div class="row w3-center divMarginButton">
         <div class="col"></div>
-        <div class="col align-self-center"><button id="btnLargeLogin" type="submit" class="w3-button btnColorHaCi">Iniciar sesión</button></div>
+        <div class="col align-self-center"><button id="btnLoginLarge" type="submit" class="w3-button btnColorHaCi">Iniciar sesión</button></div>
         <div class="col"></div>
       </div>
     </form>
   </div>
-  <div class="row w3-margin w3-padding txtFooter">
-    <div class="col w3-margin w3-padding">
-      <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
-    </div>
+  <div class="divFooter txtFooter">
+    <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
   </div>
 </div>
 <div id="divLoader" class="w3-modal">

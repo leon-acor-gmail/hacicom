@@ -31,32 +31,21 @@ $objJson = json_decode($json);
     objResources.btnCatchBackRefresh();
     $('#txtDataUploadSmall').val('<?php echo $_GET['arg']; ?>');
     $('#txtDataUploadLarge').val('<?php echo $_GET['arg']; ?>');
+
     $('#btnSaveDataBioLarge').click(function(a){
         var b = document.getElementsByTagName('form')[2];
         if(b.checkValidity())
         {
-          $('#divLoader').show();
-          //document.getElementById('divLoader').style.display='block';
-          objJson = JSON.parse('<?php echo $json; ?>');
-          objJson.bio = $('#txtBioLarge').val();
-          json = JSON.stringify(objJson);
-          base = objResources.utf8_to_b64(json);
-          window.location.href = "skills.php?arg="+base;
+          btnSaveData('Large');
           a.preventDefault();
         }
     });
 
     $('#btnSaveDataBioSmall').click(function(a){
-        var b = document.getElementsByTagName('form')[2];
+        var b = document.getElementsByTagName('form')[3];
         if(b.checkValidity())
         {
-          $('#divLoader').show();
-          //document.getElementById('divLoader').style.display='block';
-          objJson = JSON.parse('<?php echo $json; ?>');
-          objJson.bio = $('#txtBioSmall').val();
-          json = JSON.stringify(objJson);
-          base = objResources.utf8_to_b64(json);
-          window.location.href = "skills.php?arg="+base;
+          btnSaveData('Small');
           a.preventDefault();
         }
     });
@@ -84,6 +73,15 @@ $objJson = json_decode($json);
 
   });
 
+  function btnSaveData(strResponsive){
+    $('#divLoader').show();
+    objJson = JSON.parse('<?php echo $json; ?>');
+    objJson.bio = $('#txtBio'+strResponsive).val();
+    strJson = JSON.stringify(objJson);
+    base64 = objResources.utf8_to_b64(strJson);
+    window.location.href = "skills.php?arg="+base64;
+  }
+
   function setNoShot(){
     window.location.href = "shot.php?arg=<?php echo $_GET['arg'] ?>&c=1";
   }
@@ -98,9 +96,9 @@ $objJson = json_decode($json);
     <div class="col">
       <nav aria-label="breadcrumb">
         <ul class="breadcrumbSignup txtStepper w3-medium">
-          <li><img class="iconStepper" src="../images/succes.svg"> Datos generales</li>
-          <li><img class="iconStepper" src="../images/active.svg"> Tu headshot</li>
-          <li><img class="iconStepper" src="../images/inactive.svg"> Tus habilidades</li>
+          <li><img class="iconStepper" src="../images/succes.svg" alt="hecho"> Datos generales</li>
+          <li><img class="iconStepper" src="../images/active.svg" alt="activo"> Tu headshot</li>
+          <li><img class="iconStepper" src="../images/inactive.svg" alt="inactivo"> Tus habilidades</li>
         </ul>
       </nav>
     </div>
@@ -210,10 +208,8 @@ $objJson = json_decode($json);
   </form>
 </div>
   </div>
-  <div class="row w3-margin w3-padding txtFooter">
-    <div class="col w3-margin w3-padding">
-      <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
-    </div>
+  <div class="divFooter txtFooter">
+    <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
   </div>
 </div>
 <div id="divLoader" class="w3-modal">

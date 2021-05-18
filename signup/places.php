@@ -5,7 +5,7 @@ if(!isset($_SESSION['signup']))
     header('Location: https://www.hagamoscine.com');
 }
 $json = base64_decode($_GET['arg']);
-$jsonObj = json_decode($json);
+//$jsonObj = json_decode($json);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -31,44 +31,28 @@ $jsonObj = json_decode($json);
     objResources = new jsResources();
     objResources.btnCatchBackRefresh();
     getCountries();
-
-    $('#btnLargeSaveData').click(function(){
-      $('#divLoader').show();
-      $.post('../bsns/bsnsHome.php',{c:2},function(s){
-        jsonObj = JSON.parse('<?php echo $json; ?>');
-        for(i=0;i<s;i++){
-          if($('#cbValPlaceLarge'+i).prop('checked')){
-            jsonObj['cbValPlace'+i]=$('#cbValPlaceLarge'+i).val();
-          }
-        }
-        json = JSON.stringify(jsonObj);
-        base = objResources.utf8_to_b64(json);
-        window.location.href = "shot.php?arg="+base;
-      });
-    });
-
-    $('#btnSmallSaveData').click(function(){
-      $('#divLoader').show();
-      $.post('../bsns/bsnsHome.php',{c:2},function(s){
-        jsonObj = JSON.parse('<?php echo $json; ?>');
-        for(i=0;i<s;i++){
-          if($('#cbValPlaceSmall'+i).prop('checked')){
-            jsonObj['cbValPlace'+i]=$('#cbValPlaceSmall'+i).val();
-          }
-        }
-        json = JSON.stringify(jsonObj);
-        base = objResources.utf8_to_b64(json);
-        window.location.href = "shot.php?arg="+base;
-      });
-    });
-
   });
+
+  function btnSaveData(strResponsive){
+    $('#divLoader').show();
+    $.post('../bsns/bsnsHome.php',{c:2},function(s){
+      objJson = JSON.parse('<?php echo $json; ?>');
+      for(i=0;i<s;i++){
+        if($('#cbValPlace'+strResponsive+i).prop('checked')){
+          objJson['cbValPlace'+i]=$('#cbValPlace'+strResponsive+i).val();
+        }
+      }
+      strJson = JSON.stringify(objJson);
+      base64 = objResources.utf8_to_b64(strJson);
+      window.location.href = "shot.php?arg="+base64;
+    });
+  }
 
   function getCountries(){
     $('#divLoader').show();
     $.post('../bsns/bsnsLoad.php',{c:1},function(r){
-      objResources.populateListPlaces($('#divLargePlaces'),r,'Large');
-      objResources.populateListPlaces($('#divSmallPlaces'),r,'Small');
+      objResources.populateListPlaces($('#divPlacesLarge'),r,'Large');
+      objResources.populateListPlaces($('#divPlacesSmall'),r,'Small');
       $('#divLoader').hide();
     });
   }
@@ -83,9 +67,9 @@ $jsonObj = json_decode($json);
       <div class="col">
         <nav aria-label="breadcrumb">
           <ul class="breadcrumbSignup txtStepper w3-medium">
-            <li><img class="iconStepper" src="../images/active.svg"> Datos generales</li>
-            <li><img class="iconStepper" src="../images/inactive.svg" > Tu headshot</li>
-            <li><img class="iconStepper" src="../images/inactive.svg"> Tus habilidades</li>
+            <li><img class="iconStepper" src="../images/active.svg" alt="activo"> Datos generales</li>
+            <li><img class="iconStepper" src="../images/inactive.svg" alt="inactivo"> Tu headshot</li>
+            <li><img class="iconStepper" src="../images/inactive.svg" alt="inactivo"> Tus habilidades</li>
           </ul>
         </nav>
       </div>
@@ -97,18 +81,18 @@ $jsonObj = json_decode($json);
       <div class="card w3-margin">
         <div class="card-body w3-text-gray">
           <p class="card-title w3-large">Países disponibles para trabajar</p>
-          <div id="divLargePlaces" class="divOverflow"></div>
+          <div id="divPlacesLarge" class="divOverflow"></div>
         </div>
-      </div>
-      <div class="row  w3-section">
-        <div class="col"></div>
-        <div class="col w3-center">
-          <button id="btnLargeSaveData" type="submit" class="w3-button btnColorHaCi">Continuar</button>
-        </div>
-        <div class="col"></div>
       </div>
     </div>
     <div class="col-2"></div>
+  </div>
+  <div class="row w3-section">
+    <div class="col"></div>
+    <div class="col w3-center">
+      <button onclick="btnSaveData('Large');" class="w3-button btnColorHaCi">Continuar</button>
+    </div>
+    <div class="col"></div>
   </div>
 </div>
 <div class="divSmall">
@@ -117,21 +101,19 @@ $jsonObj = json_decode($json);
       <div class="card">
         <div class="card-body w3-text-gray">
           <p class="card-title w3-large">Países disponibles para trabajar</p>
-          <div id="divSmallPlaces" class="divOverflow"></div>
+          <div id="divPlacesSmall" class="divOverflow"></div>
         </div>
       </div>
     </div>
   </div>
-    <div class="row w3-section">
-      <div class="col w3-center">
-        <button id="btnSmallSaveData" type="submit" class="w3-button btnColorHaCi">Continuar</button>
-      </div>
+  <div class="row w3-section">
+    <div class="col w3-center">
+      <button onclick="btnSaveData('Small');" class="w3-button btnColorHaCi">Continuar</button>
     </div>
-</div>
-<div class="row w3-margin w3-padding txtFooter">
-  <div class="col w3-margin w3-padding">
-    <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
   </div>
+</div>
+<div class="divFooter txtFooter">
+  <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
 </div>
 </div>
 <div id="divLoader" class="w3-modal">

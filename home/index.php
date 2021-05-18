@@ -413,8 +413,8 @@ else
           </li>
           <li class="nav-item w3-margin divSmall">
             <a class="w3-large"><?php echo $objJson->nickname ?></a><br>
-            <a id="btnUpdateProfileSmall" class="w3-button btnColorUpdateProfile">Actualizar perfil</a>
-            <a href="../bsns/bsnsLogout.php" class="w3-button btnColorHaCi">Cerrar sesión</a>
+            <a id="btnUpdateProfileSmall" class="w3-button w3-block w3-purple" style="margin-top:15px;text-decoration: none;">Actualizar perfil</a>
+            <a href="../bsns/bsnsLogout.php" class="w3-button w3-block w3-pink" style="margin-top:5px;text-decoration: none;">Cerrar sesión</a>
           </li>
         </ul>
         <ul class="navbar-nav">
@@ -602,10 +602,8 @@ else
       <label>En construcción</label>
     </div>
   </div>
-  <div class="row w3-margin w3-padding txtFooter">
-    <div class="col w3-margin w3-padding">
-      <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
-    </div>
+  <div class="divFooter txtFooter">
+    <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
   </div>
 </div>
 <div id="divModalUserSeeProfile" class="w3-modal w3-animate-opacity"></div>
@@ -620,8 +618,14 @@ else
      <span onclick="document.getElementById('divAlert').style.display='none'" class="w3-button w3-display-topright"><i class="fa fa-times w3-large"></i></span>
      <p id="txtMsgHeaderAlert" class="w3-xlarge"></p>
      <p id="txtMsgAlert"></p>
-     <button onclick="$('#divAlert').hide();" class="w3-button w3-teal w3-block w3-left" style="margin-top:5px;width:50%;">Continuar</button>
-     <button id="btnGetPremium" onclick="$('#divAlert').hide();alert('Comprar Premium: En construcción');" class="w3-button w3-purple w3-block w3-right" style="display:none;margin-top:5px;width:50%;"><i class="fa fa-star w3-text-yellow w3-large"></i> Get Premium</button>
+     <div class="w3-row">
+      <div class="w3-container w3-half">
+    	   <button onclick="$('#divAlert').hide();" class="w3-button w3-teal w3-block" style="margin-top:5px;">Continuar</button>
+      </div>
+      <div class="w3-container w3-half">
+        <button id="btnGetPremium" onclick="$('#divAlert').hide();alert('Comprar Premium: En construcción');" class="w3-button w3-purple w3-block" style="display:none;margin-top:5px;"><i class="fa fa-star w3-text-yellow w3-large"></i> Get Premium</button>
+      </div>
+    </div>
    </div>
  </div>
 </div>
@@ -636,8 +640,14 @@ else
      <label id="strEmailLinkedAlert" style="display:none;"></label>
      <label id="strNicknameLinkedAlert" style="display:none;"></label>
      <label id="strNicknameOwnAlert" style="display:none;"></label>
-     <button onclick="objResources.setUsersLink($('#btnHashIdAlert').text(),$('#strEmailOwnAlert').text(),$('#strEmailLinkedAlert').text(),$('#strNicknameLinkedAlert').text(),$('#strNicknameOwnAlert').text(),true);$('#divAlertUserLink').hide();" class="w3-button w3-teal w3-block w3-left" style="margin-top:5px;width:50%;">Aceptar</button>
-     <button onclick="$('#divAlertUserLink').hide();" class="w3-button w3-pink w3-block w3-right" style="margin-top:5px;width:50%;">Cancelar</button>
+     <div class="w3-row">
+      <div class="w3-container w3-half">
+    	 <button onclick="objResources.setUsersLink($('#btnHashIdAlert').text(),$('#strEmailOwnAlert').text(),$('#strEmailLinkedAlert').text(),$('#strNicknameLinkedAlert').text(),$('#strNicknameOwnAlert').text(),true);$('#divAlertUserLink').hide();" class="w3-button w3-teal w3-block" style="margin-top:5px;">Aceptar</button>
+      </div>
+      <div class="w3-container w3-half">
+       <button onclick="$('#divAlertUserLink').hide();" class="w3-button w3-pink w3-block" style="margin-top:5px;">Cancelar</button>
+      </div>
+    </div>
    </div>
  </div>
 </div>

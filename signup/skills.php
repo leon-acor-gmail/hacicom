@@ -31,51 +31,32 @@ $json = base64_decode($_GET['arg']);
     objResources = new jsResources();
     objResources.btnCatchBackRefresh();
     getFieldsSkills();
-    $('#btnSaveDataLarge').click(function(){
-      $('#divLoader').show();
-      jsonStr = JSON.stringify(<?php echo $json; ?>);
-      jsonObj = JSON.parse(jsonStr);
-      $.post('../bsns/bsnsIndex.php',{c:2},function(r){
-        for(i=0;i<r;i++){
-          if($('#cbValSkillLarge'+i).prop('checked')){
-            jsonObj['cbValSkill'+i]=$('#cbValSkillLarge'+i).val();
-          }
-        }
-        jsonStr = JSON.stringify(jsonObj);
-        base = objResources.utf8_to_b64(jsonStr);
-        $.post('../bsns/bsnsHome.php',{c:1,arg:base},function(s){
-          $.post('../bsns/bsnsSendEmail.php',{to:jsonObj.email,sub:'Registro exitoso',msg:'Su cuenta ha sido creada con éxito',name:jsonObj.nickname},function(t){
-            objJsonLogin= {arg1:jsonObj.email};
-            strJsonLogin = JSON.stringify(objJsonLogin);
-            base64Login = objResources.utf8_to_b64(strJsonLogin);
-            $.post('../bsns/bsnsHome.php',{c:11,arg:base64Login},function(u){
-              window.location.href = '../home/?arg='+u;
-            });
-          });
-        });
-      });
-    });
-
-    $('#btnSaveDataSmall').click(function(){
-      $('#divLoader').show();
-      jsonStr = JSON.stringify(<?php echo $json; ?>);
-      jsonObj = JSON.parse(jsonStr);
-      $.post('../bsns/bsnsIndex.php',{c:2},function(r){
-        for(i=0;i<r;i++){
-          if($('#cbValSkillSmall'+i).prop('checked')){
-            jsonObj['cbValSkill'+i]=$('#cbValSkillSmall'+i).val();
-          }
-        }
-        jsonStr = JSON.stringify(jsonObj);
-        base = objResources.utf8_to_b64(jsonStr);
-        $.post('../bsns/bsnsHome.php',{c:1,arg:base},function(s){
-          $.post('../bsns/bsnsSendEmail.php',{to:jsonObj.email,sub:'Registro exitoso',msg:'Su cuenta ha sido creada con éxito'},function(t){
-            window.location.href = '../home/?arg='+base;
-          });
-        });
-      });
-    });
   });
+
+  function btnSaveData(strResponsive){
+    $('#divLoader').show();
+    strJson = JSON.stringify(<?php echo $json; ?>);
+    objJson = JSON.parse(strJson);
+    $.post('../bsns/bsnsIndex.php',{c:2},function(r){
+      for(i=0;i<r;i++){
+        if($('#cbValSkill'+strResponsive+i).prop('checked')){
+          objJson['cbValSkill'+i]=$('#cbValSkill'+strResponsive+i).val();
+        }
+      }
+      strJson = JSON.stringify(objJson);
+      base = objResources.utf8_to_b64(strJson);
+      $.post('../bsns/bsnsHome.php',{c:1,arg:base},function(s){
+        $.post('../bsns/bsnsSendEmail.php',{to:objJson.email,sub:'Registro exitoso',msg:'Su cuenta ha sido creada con éxito',name:objJson.nickname},function(t){
+          objJsonLogin= {arg1:objJson.email};
+          strJsonLogin = JSON.stringify(objJsonLogin);
+          base64Login = objResources.utf8_to_b64(strJsonLogin);
+          $.post('../bsns/bsnsHome.php',{c:11,arg:base64Login},function(u){
+            window.location.href = '../home/?arg='+u;
+          });
+        });
+      });
+    });
+  }
 
   function getFieldsSkills(){
     $('#divLoader').show();
@@ -103,9 +84,9 @@ $json = base64_decode($_GET['arg']);
     <div class="col">
       <nav aria-label="breadcrumb">
         <ul class="breadcrumbSignup txtStepper w3-medium">
-          <li><img class="iconStepper" src="../images/succes.svg"> Datos generales</li>
-          <li><img class="iconStepper" src="../images/succes.svg"> Tu headshot</li>
-          <li><img class="iconStepper" src="../images/active.svg"> Tus habilidades</li>
+          <li><img class="iconStepper" src="../images/succes.svg" alt="hecho"> Datos generales</li>
+          <li><img class="iconStepper" src="../images/succes.svg" alt="hecho"> Tu headshot</li>
+          <li><img class="iconStepper" src="../images/active.svg" alt="activo"> Tus habilidades</li>
         </ul>
       </nav>
     </div>
@@ -115,7 +96,7 @@ $json = base64_decode($_GET['arg']);
     <div class="row w3-section">
       <div class="col"></div>
       <div class="col w3-center">
-        <button id="btnSaveDataLarge" type="button" class="w3-button btnColorHaCi">Finalizar</button>
+        <button onclick="btnSaveData('Large');" type="button" class="w3-button btnColorHaCi">Finalizar</button>
       </div>
       <div class="col"></div>
     </div>
@@ -124,14 +105,12 @@ $json = base64_decode($_GET['arg']);
     <div id="divFieldsSkillsSmall"></div>
     <div class="row w3-section">
       <div class="col">
-        <button id="btnSaveDataSmall" type="button" class="w3-button btnColorHaCi">Finalizar</button>
+        <button onclick="btnSaveData('Small');" type="button" class="w3-button btnColorHaCi">Finalizar</button>
       </div>
     </div>
   </div>
-  <div class="row w3-margin w3-padding txtFooter">
-    <div class="col w3-margin w3-padding">
-      <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
-    </div>
+  <div class="divFooter txtFooter">
+    <label>Todos los derechos reservados 2021 - hagamoscine.com</label>
   </div>
 </div>
 <div id="divLoader" class="w3-modal">

@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION['admin']))
+{
+    header('Location: https://www.hagamoscine.com');
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
